@@ -321,6 +321,51 @@ canvas {
   color:#388e3c;
   border-color:#a5d6a7
 }
+.sg-onoff.mixed {
+  background:#fff8e1;
+  color:#a76700;
+  border-color:#ffd180
+}
+.palette-preset-bar {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:4px;
+  margin-bottom:6px
+}
+.palette-preset-bar button {
+  min-width:0;
+  padding:6px 3px;
+  border:1px solid #ddd;
+  border-radius:7px;
+  background:#fff;
+  color:#666;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:11px;
+  line-height:1.2
+}
+.palette-preset-bar button small {
+  display:block;
+  margin-top:2px;
+  color:#999;
+  font-size:8px
+}
+.palette-preset-bar button.on {
+  border-color:#e8534a;
+  background:#fff2f1;
+  color:#b7332c;
+  font-weight:700
+}
+.palette-mode-note,.palette-ground-warning,.palette-help {
+  margin-bottom:6px;
+  padding:5px 7px;
+  border-radius:6px;
+  font-size:9px;
+  line-height:1.45
+}
+.palette-mode-note {background:#f6f4ff;color:#69529a}
+.palette-ground-warning {background:#fff8e6;color:#8b5c00}
+.palette-help {padding:0 2px;color:#888}
 .snap-item {
   display:flex;
   align-items:center;
@@ -362,8 +407,15 @@ canvas {
 }
 .sw-row {
   display:flex;
-  gap:2px;
+  gap:3px 2px;
   flex-wrap:wrap
+}
+.sw-cell {
+  width:28px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1px
 }
 .sw {
   width:19px;
@@ -379,16 +431,31 @@ canvas {
 .sw.on {
   border-color:#111
 }
-.sw.off {
-  opacity:.15;
-  cursor:not-allowed;
-  pointer-events:none
+.sw.auto-disabled {
+  opacity:.38;
+  filter:grayscale(.55)
 }
 .sw.excluded {
-  opacity:.22;
-  cursor:not-allowed;
-  pointer-events:none;
-  filter:grayscale(.7)
+  opacity:.55;
+  filter:grayscale(.35)
+}
+.sw-auto-toggle {
+  width:28px;
+  height:12px;
+  padding:0;
+  border:1px solid #ddd;
+  border-radius:4px;
+  background:#f4f4f4;
+  color:#aaa;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:8px;
+  line-height:10px
+}
+.sw-auto-toggle.on {
+  border-color:#a5d6a7;
+  background:#e8f5e9;
+  color:#388e3c
 }
 .mrow {
   display:flex;
@@ -799,6 +866,15 @@ canvas {
   background:#f8f8f8;
   border-radius:7px;
   margin-bottom:7px
+}
+.current-material-caption {
+  flex-shrink:0;
+  padding-right:7px;
+  border-right:1px solid #ddd;
+  color:#777;
+  font-size:9px;
+  font-weight:700;
+  white-space:nowrap
 }
 .compare-row {
   display:grid;
@@ -2390,7 +2466,15 @@ body.modal-open {
     <div class="lbl">編集エリア</div>
     <div class="palette-area">
     <div class="lbl">素材パレット <span style="font-weight:400;color:#aaa;font-size:10px">（グループ名をクリックで開閉）</span></div>
-    <!-- 素材グループON/OFFと折りたたみを統合 -->
+    <div class="palette-preset-bar" role="group" aria-label="自動変換の素材パレット">
+      <button type="button" data-palette-mode="full" onclick="setPaletteMode('full')">フル <small>247色・非推奨</small></button>
+      <button type="button" data-palette-mode="standard" onclick="setPaletteMode('standard')">標準 <small>148色</small></button>
+      <button type="button" data-palette-mode="saving" onclick="setPaletteMode('saving')">省素材 <small>106色</small></button>
+      <button type="button" data-palette-mode="custom" onclick="showMsg('色ごとの自動変換ON/OFFを変更するとカスタムになります')">カスタム <small id="custom-palette-count">148色</small></button>
+    </div>
+    <div id="palette-mode-note" class="palette-mode-note">標準：近い色を整理しつつ、色の再現性を重視します。</div>
+    <div class="palette-ground-warning">⚠️ 地面に作る場合、フカフカじゅうたんは上面に柄があるため、必要に応じてグループをOFFにしてください。</div>
+    <div class="palette-help">色をクリック：手動素材を選択 ／ 「変換候補 ON／OFF」：画像変換で使う色を切り替え</div>
     <div id="sws-wrap"></div>
     </div>
 
@@ -2448,6 +2532,7 @@ body.modal-open {
       <!-- 選択中素材と元画像からの素材選択 -->
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
         <div class="cprev" style="margin-bottom:0;flex:1;min-width:0">
+          <span class="current-material-caption" title="ペン・塗りつぶしで使用する素材">選択中の素材</span>
           <div id="cur-dot" style="width:15px;height:15px;border-radius:3px;border:1px solid #ddd;flex-shrink:0;background:#F4EBE6"></div>
           <span id="cur-name" style="font-size:11px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ぬののカベ</span>
         </div>
@@ -2464,7 +2549,7 @@ body.modal-open {
         <div class="source-pick-controls">
           <button class="fix-btn" onclick="setSrcPickMode('limited')" title="元画像プレビューから、現在の使用色候補内で一番近い素材を拾う">元画像→使用色</button>
           <button class="fix-btn" onclick="setSrcPickMode('all')" title="元画像プレビューから、全素材候補で一番近い素材を拾う">元画像→全素材</button>
-          <div class="source-pick-help"><strong>使用色:</strong> 今のドット絵で使っている素材から選択　／　<strong>全素材:</strong> 有効な全素材から最も近い色を選択</div>
+          <div class="source-pick-help"><strong>使用色:</strong> 今のドット絵で使っている素材から選択　／　<strong>全素材:</strong> 自動変換の設定にかかわらず全247色から選択</div>
         </div>
       </div>
       <div class="compare-row source-preview-unavailable">
@@ -2698,7 +2783,7 @@ body.modal-open {
       <li><strong>マイ作品に保存する</strong><span>保存されるのはドット絵と素材情報です。元画像そのものは保存されません。保存後も「編集で開く」から直せます。</span></li>
       <li><strong>作る・共有する</strong><span>マイ作品の「作業ビュー」やチェックリストHTMLで制作し、JSON・PNG・GIFで共有できます。</span></li>
     </ol>
-    <div class="onboarding-note">12素材×19色（228色）に対応。JSON保存が最も確実です。</div>
+    <div class="onboarding-note">13素材×19色（247色）に対応。JSON保存が最も確実です。</div>
     <div class="modal-actions"><button class="btn" onclick="closeOnboarding('skip')">スキップ</button><button class="btn ac" onclick="closeOnboarding('never')">次回から表示しない</button></div>
   </div>
 </div>
@@ -16122,7 +16207,7 @@ function GifReaderLZWOutputIndexStream(code_stream, p, output, output_length) {
 // CommonJS.
 try { exports.GifWriter = GifWriter; exports.GifReader = GifReader } catch(e) {}
 
-// ===== 素材データ（12素材×19色）=====
+// ===== 素材データ（13素材×19色）=====
 const ALL_MATS = [
   {id:'nuno-0',name:'ぬののカベ',cat:'ぬの系',hex:'#F6EEE9',matBase:'nuno',dyeIdx:0},
   {id:'nuno-1',name:'ぬののカベ（しろ）',cat:'ぬの系',hex:'#E9DBD5',matBase:'nuno',dyeIdx:1},
@@ -16351,7 +16436,26 @@ const ALL_MATS = [
   {id:'rough_wall-15',name:'ざらざらカベ（あお/くろ）',cat:'ざらざらカベ系',hex:'#A6BAE0',matBase:'rough_wall',dyeIdx:15},
   {id:'rough_wall-16',name:'ざらざらカベ（くろ）',cat:'ざらざらカベ系',hex:'#BBB1B0',matBase:'rough_wall',dyeIdx:16},
   {id:'rough_wall-17',name:'ざらざらカベ（あお/しろ）',cat:'ざらざらカベ系',hex:'#CAC9D0',matBase:'rough_wall',dyeIdx:17},
-  {id:'rough_wall-18',name:'ざらざらカベ（ももいろ）',cat:'ざらざらカベ系',hex:'#FEC8D0',matBase:'rough_wall',dyeIdx:18}
+  {id:'rough_wall-18',name:'ざらざらカベ（ももいろ）',cat:'ざらざらカベ系',hex:'#FEC8D0',matBase:'rough_wall',dyeIdx:18},
+  {id:'lacquer_wall-0',name:'うるしぬりのカベ',cat:'うるしぬりのカベ系',hex:'#A2272A',matBase:'lacquer_wall',dyeIdx:0},
+  {id:'lacquer_wall-1',name:'うるしぬりのカベ（しろ）',cat:'うるしぬりのカベ系',hex:'#E2D8D6',matBase:'lacquer_wall',dyeIdx:1},
+  {id:'lacquer_wall-2',name:'うるしぬりのカベ（あか）',cat:'うるしぬりのカベ系',hex:'#CC4738',matBase:'lacquer_wall',dyeIdx:2},
+  {id:'lacquer_wall-3',name:'うるしぬりのカベ（あお）',cat:'うるしぬりのカベ系',hex:'#44B2D3',matBase:'lacquer_wall',dyeIdx:3},
+  {id:'lacquer_wall-4',name:'うるしぬりのカベ（きいろ）',cat:'うるしぬりのカベ系',hex:'#FFDC1E',matBase:'lacquer_wall',dyeIdx:4},
+  {id:'lacquer_wall-5',name:'うるしぬりのカベ（みどり）',cat:'うるしぬりのカベ系',hex:'#3AC641',matBase:'lacquer_wall',dyeIdx:5},
+  {id:'lacquer_wall-6',name:'うるしぬりのカベ（みどり/みずいろ）',cat:'うるしぬりのカベ系',hex:'#49DBB4',matBase:'lacquer_wall',dyeIdx:6},
+  {id:'lacquer_wall-7',name:'うるしぬりのカベ（あか/きいろ）',cat:'うるしぬりのカベ系',hex:'#FF8D3A',matBase:'lacquer_wall',dyeIdx:7},
+  {id:'lacquer_wall-8',name:'うるしぬりのカベ（ももいろ/あお）',cat:'うるしぬりのカベ系',hex:'#C36BC2',matBase:'lacquer_wall',dyeIdx:8},
+  {id:'lacquer_wall-9',name:'うるしぬりのカベ（あか/みどり）',cat:'うるしぬりのカベ系',hex:'#C57739',matBase:'lacquer_wall',dyeIdx:9},
+  {id:'lacquer_wall-10',name:'うるしぬりのカベ（みずいろ）',cat:'うるしぬりのカベ系',hex:'#B2C4EA',matBase:'lacquer_wall',dyeIdx:10},
+  {id:'lacquer_wall-11',name:'うるしぬりのカベ（あか/ももいろ）',cat:'うるしぬりのカベ系',hex:'#FF89B9',matBase:'lacquer_wall',dyeIdx:11},
+  {id:'lacquer_wall-12',name:'うるしぬりのカベ（みどり/きいろ）',cat:'うるしぬりのカベ系',hex:'#C1D130',matBase:'lacquer_wall',dyeIdx:12},
+  {id:'lacquer_wall-13',name:'うるしぬりのカベ（しろ/くろ）',cat:'うるしぬりのカベ系',hex:'#B4A085',matBase:'lacquer_wall',dyeIdx:13},
+  {id:'lacquer_wall-14',name:'うるしぬりのカベ（あか/あお）',cat:'うるしぬりのカベ系',hex:'#715192',matBase:'lacquer_wall',dyeIdx:14},
+  {id:'lacquer_wall-15',name:'うるしぬりのカベ（あお/くろ）',cat:'うるしぬりのカベ系',hex:'#4877BF',matBase:'lacquer_wall',dyeIdx:15},
+  {id:'lacquer_wall-16',name:'うるしぬりのカベ（くろ）',cat:'うるしぬりのカベ系',hex:'#544E50',matBase:'lacquer_wall',dyeIdx:16},
+  {id:'lacquer_wall-17',name:'うるしぬりのカベ（あお/しろ）',cat:'うるしぬりのカベ系',hex:'#93AEC1',matBase:'lacquer_wall',dyeIdx:17},
+  {id:'lacquer_wall-18',name:'うるしぬりのカベ（ももいろ）',cat:'うるしぬりのカベ系',hex:'#FFB5BA',matBase:'lacquer_wall',dyeIdx:18}
 ];
 
 const MAT_BASES = [
@@ -16367,7 +16471,48 @@ const MAT_BASES = [
   {id:'tile_carpet', label:'タイルカーペット', color:'#9996A3'},
   {id:'fluffy_carpet', label:'フカフカじゅうたん', color:'#0A5F9C'},
   {id:'rough_wall', label:'ざらざらカベ', color:'#D6C392'},
+  {id:'lacquer_wall', label:'うるしぬりのカベ', color:'#A2272A'},
 ];
+
+// 自動変換で使用する固定パレット。手動編集ではプリセット外の素材も常に選べる。
+const PALETTE_PRESET_DYES = Object.freeze({
+  standard:Object.freeze({
+    nuno:[0],
+    carpet:'all',
+    floor:'all',
+    iron_tile:'all',
+    panel:'all',
+    marble:[0,2,3,4,5,6,7,8,9,12,13,14,15,16,17,18],
+    pokecenter_wall:'all',
+    tile_carpet:[0,1,2,3,4,7,8,9,13,14,16,18],
+    fluffy_carpet:'all',
+    lacquer_wall:[0,9,13,17,18]
+  }),
+  saving:Object.freeze({
+    carpet:[0,2,4,6,9,12,13,15,16,17],
+    floor:'all',
+    iron_tile:[0,2,4,5,6,7,8,9,11,12,14,15,16,17],
+    panel:'all',
+    marble:[2,4,5,12,13,14,15],
+    pokecenter_wall:'all',
+    tile_carpet:[4,7,11,16,17],
+    fluffy_carpet:[0,2,3,4,5,6,7,8,9,12,13,18],
+    lacquer_wall:[0]
+  })
+});
+
+function buildPalettePresetIds(rules){
+  return Object.freeze(ALL_MATS.filter(material=>{
+    const dyes=rules[material.matBase];
+    return dyes==='all'||Array.isArray(dyes)&&dyes.includes(material.dyeIdx);
+  }).map(material=>material.id));
+}
+
+const PALETTE_PRESETS = Object.freeze({
+  full:Object.freeze(ALL_MATS.map(material=>material.id)),
+  standard:buildPalettePresetIds(PALETTE_PRESET_DYES.standard),
+  saving:buildPalettePresetIds(PALETTE_PRESET_DYES.saving)
+});
 // クラフト素材集計。作品データには保存せず、素材IDと個数から毎回算出する。
 const BASE_RECIPES = Object.freeze({
   nuno:{inputs:[{item:'いとくず',qty:2}],yield:10},
@@ -16381,7 +16526,8 @@ const BASE_RECIPES = Object.freeze({
   plaster_wall:{inputs:[{item:'かいがら',qty:1}],yield:10},
   tile_carpet:{inputs:[{item:'いとくず',qty:2}],yield:10},
   fluffy_carpet:{inputs:[{item:'いとくず',qty:2}],yield:10},
-  rough_wall:{inputs:[{item:'コンクリート',qty:2}],yield:10}
+  rough_wall:{inputs:[{item:'コンクリート',qty:2}],yield:10},
+  lacquer_wall:{inputs:[{item:'ざいもく',qty:2}],yield:10}
 });
 
 const DYE_PATTERNS = Object.freeze([
@@ -18217,7 +18363,9 @@ function stopQrScanner(){
 
 document.addEventListener('DOMContentLoaded',updateWorkIdentity);
 
-let enabledMats = new Set(MAT_BASES.map(m=>m.id));
+const DEFAULT_PALETTE_MODE='standard';
+let paletteMode=DEFAULT_PALETTE_MODE;
+let autoEnabledIds=new Set(PALETTE_PRESETS[DEFAULT_PALETTE_MODE]);
 let origPixels = null; // ステップ1（色削減前）のピクセルを保持
 let origPixelLabs = null; // 画像由来の調整後Lab色。局所安定化に使う
 let origPixelRgbs = null; // 画像由来の調整後RGB色。素材パレット変更時の固定基準に使う
@@ -18409,7 +18557,7 @@ function getActivePalette() {
 }
 
 function getGroupFiltered() {
-  return ALL_MATS.filter(m => enabledMats.has(m.matBase));
+  return ALL_MATS.filter(m => autoEnabledIds.has(m.id));
 }
 
 // ===== 最近傍マッチング =====
@@ -18561,8 +18709,6 @@ function applyFixedSourceColorsToCurrentSettings(applyAdjust=false, adjustValues
   document.getElementById('cl-val').textContent=sl.value;
   buildMergeMap(+sl.value,usage);
   applyMergeMapFrom(origPixels);
-  const active=getActivePalette();
-  if(curMat&&!active.find(m=>m.id===curMat.id)){if(active.length)setMat(active[0]);}
   buildMatSel();buildSwatches();redraw();updateColorLimitPreviews();calcMats();buildHLList();
   cacheCurrentInitialConvertState();
   return true;
@@ -18877,13 +19023,11 @@ function setT(t){
   ['pen','fill','erase','pick'].forEach(id=>document.getElementById('tb-'+id)?.classList.toggle('on',id===t));
   document.getElementById('cw-main')?.classList.toggle('pick-mode', t==='pick');
 }
-function setMat(m, allowInactive=false){
-  const active=getActivePalette();
-  const isActive=active.find(a=>a.id===m.id);
-  if(!allowInactive && !isActive)return;
+function setMat(m){
+  if(!m)return;
   curMat=m;
   document.getElementById('cur-dot').style.background=m.hex;
-  document.getElementById('cur-name').textContent=m.name + (allowInactive && !isActive ? '（全素材から選択）' : '');
+  document.getElementById('cur-name').textContent=m.name + (autoEnabledIds.has(m.id)?'':'（手動専用）');
   document.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s.dataset.mid===m.id));
 }
 function matHsl(m){const[r,g,b]=hexToRgb(m.hex);return rgbToHsl(r,g,b);}
@@ -18902,7 +19046,9 @@ function buildSwatches(){
 
   MAT_BASES.forEach(mb=>{
     const mats=ALL_MATS.filter(m=>m.matBase===mb.id);
-    const on=enabledMats.has(mb.id);
+    const enabledCount=mats.filter(m=>autoEnabledIds.has(m.id)).length;
+    const on=enabledCount===mats.length;
+    const mixed=enabledCount>0&&!on;
     // 初回は最初の2グループだけ開く
     if(groupOpen[mb.id]===undefined) groupOpen[mb.id]=MAT_BASES.indexOf(mb)<2;
     const isOpen=groupOpen[mb.id];
@@ -18917,11 +19063,11 @@ function buildSwatches(){
     lbl.innerHTML=`
       <span style="display:flex;align-items:center;gap:6px">
         <span style="width:10px;height:10px;border-radius:2px;background:${mb.color};border:0.5px solid #ddd;flex-shrink:0;display:inline-block"></span>
-        <span style="${on?'':'color:#bbb'}">${mb.label}</span>
+        <span style="${enabledCount?'':'color:#bbb'}">${mb.label}</span>
       </span>
       <span class="sg-meta">
-        <span style="color:${on?'#e8534a':'#ccc'}">${on?usedCount+'色':'OFF'}</span>
-        <button class="sg-onoff${on?' on':''}" onclick="event.stopPropagation();toggleMatGroup('${mb.id}')">${on?'ON':'OFF'}</button>
+        <span style="color:${enabledCount?'#e8534a':'#ccc'}">${usedCount}/${mats.length}色</span>
+        <button class="sg-onoff${on?' on':mixed?' mixed':''}" onclick="event.stopPropagation();toggleMatGroup('${mb.id}')">${on?'ON':mixed?'一部':'OFF'}</button>
         <span class="sg-arrow">▼</span>
       </span>`;
     lbl.onclick=()=>{
@@ -18936,12 +19082,22 @@ function buildSwatches(){
     body.className='sg-body'+(isOpen?' open':'');
     const row=document.createElement('div');row.className='sw-row';
     mats.forEach(m=>{
+      const autoEnabled=autoEnabledIds.has(m.id);
       const inActive=activeIds.has(m.id);
+      const cell=document.createElement('div');cell.className='sw-cell';
       const d=document.createElement('div');
-      d.className='sw'+(m===curMat?' on':'')+(on?'':' off')+(on&&!inActive?' excluded':'');
+      d.className='sw'+(m===curMat?' on':'')+(autoEnabled?'':' auto-disabled')+(autoEnabled&&!inActive?' excluded':'');
       d.style.background=m.hex;d.dataset.mid=m.id;
-      d.title=m.name+(inActive?'':' → '+(ALL_MATS.find(x=>x.id===resolveId(m.id))?.name||''));
-      d.onclick=()=>{setMat(m);showMsg('🎨 '+m.name);};row.appendChild(d);
+      d.title=m.name+(autoEnabled?(inActive?'（自動変換・手動編集）':'（色数削減で統合中・手動編集可）'):'（手動編集のみ）');
+      d.setAttribute('role','button');d.tabIndex=0;
+      d.onclick=()=>{setMat(m);showMsg('🎨 '+m.name);};
+      d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();d.click();}};
+      const toggle=document.createElement('button');
+      toggle.type='button';toggle.className='sw-auto-toggle'+(autoEnabled?' on':'');toggle.textContent=autoEnabled?'ON':'OFF';
+      toggle.title=`${m.name}を自動変換で${autoEnabled?'使わない':'使う'}`;
+      toggle.setAttribute('aria-label',toggle.title);
+      toggle.onclick=()=>togglePaletteColor(m.id);
+      cell.appendChild(d);cell.appendChild(toggle);row.appendChild(cell);
     });
     body.appendChild(row);g.appendChild(body);
     wrap.appendChild(g);
@@ -18949,21 +19105,62 @@ function buildSwatches(){
 }
 
 function toggleMatGroup(mbId){
-  const on=enabledMats.has(mbId);
-  if(on){if(enabledMats.size<=1)return;enabledMats.delete(mbId);}
-  else enabledMats.add(mbId);
+  const ids=ALL_MATS.filter(m=>m.matBase===mbId).map(m=>m.id);
+  const shouldDisable=ids.some(id=>autoEnabledIds.has(id));
+  if(shouldDisable&&autoEnabledIds.size<=ids.filter(id=>autoEnabledIds.has(id)).length){showMsg('自動変換には1色以上必要です');return;}
+  ids.forEach(id=>shouldDisable?autoEnabledIds.delete(id):autoEnabledIds.add(id));
+  paletteMode='custom';
+  applyAutoPaletteSelection();
+}
+
+function togglePaletteColor(materialId){
+  if(autoEnabledIds.has(materialId)){
+    if(autoEnabledIds.size<=1){showMsg('自動変換には1色以上必要です');return;}
+    autoEnabledIds.delete(materialId);
+  }else autoEnabledIds.add(materialId);
+  paletteMode='custom';
+  applyAutoPaletteSelection();
+}
+
+function setPaletteMode(mode){
+  if(!PALETTE_PRESETS[mode])return;
+  paletteMode=mode;
+  autoEnabledIds=new Set(PALETTE_PRESETS[mode]);
+  applyAutoPaletteSelection();
+}
+
+function updatePaletteModeUi(){
+  document.querySelectorAll('[data-palette-mode]').forEach(button=>button.classList.toggle('on',button.dataset.paletteMode===paletteMode));
+  const count=autoEnabledIds.size;
+  const customCount=document.getElementById('custom-palette-count');
+  if(customCount)customCount.textContent=count+'色';
+  const notes={
+    full:'フル：全247色を自動変換に使います。柄の強い素材も含むため非推奨です。',
+    standard:'標準：近い色を整理しつつ、色の再現性を重視します。',
+    saving:'省素材：近い色をさらにまとめ、集める素材の種類を抑えます。',
+    custom:'カスタム：色ごとの設定を反映中です（自動変換 '+count+'色）。'
+  };
+  const note=document.getElementById('palette-mode-note');
+  if(note)note.textContent=notes[paletteMode];
+}
+
+function applyAutoPaletteSelection(){
+  mergeMap={};
   const total=getGroupFiltered().length;
   const sl=document.getElementById('cl-sl');
+  sl.min=Math.min(2,total);
   sl.max=total;
+  document.querySelector('.color-limit-box label').textContent=sl.min;
   document.getElementById('cl-max').textContent=total;
   if(+sl.value>total) sl.value=total;
   if(origPixelLabs){applyPaletteChangeFromFixedSourceColors();}
   else{buildMergeMap(+sl.value);buildSwatches();updateColorLimitPreviews();}
-  if(!enabledMats.has(curMat?.matBase)){const f=getActivePalette()[0];if(f)setMat(f);}
+  updatePaletteModeUi();
+  setMat(curMat);
 }
 
 function getInitialConvertSignature(){
-  const groups=[...enabledMats].sort().join('|');
+  const palette=[...autoEnabledIds].sort().join('|');
   return [
     sourceFileName||'',
     sourceContentKey||'',
@@ -18972,7 +19169,7 @@ function getInitialConvertSignature(){
     document.getElementById('sl-sat')?.value||'',
     document.getElementById('sl-con')?.value||'',
     document.getElementById('sl-bri')?.value||'',
-    groups
+    palette
   ].join('::');
 }
 
@@ -19012,7 +19209,10 @@ function getSourceGridSample(fullImageData,width,height){
 }
 
 function resetControlsForNewImage(){
-  enabledMats=new Set(MAT_BASES.map(m=>m.id));
+  paletteMode=DEFAULT_PALETTE_MODE;
+  autoEnabledIds=new Set(PALETTE_PRESETS[DEFAULT_PALETTE_MODE]);
+  mergeMap={};
+  updatePaletteModeUi();
   const defaults=DEFAULT_ADJUST_VALUES;
   appliedAdjustValues=cloneAdjustValues(defaults);
   fixedSourceAdjustValues=cloneAdjustValues(defaults);
@@ -19173,8 +19373,6 @@ function doInitialConvert(options={}){
       document.getElementById('cl-max').textContent=sl.max;
       document.getElementById('cl-val').textContent=sl.value;
     }
-    const active=getActivePalette();
-    if(curMat&&!active.find(m=>m.id===curMat.id)){if(active.length)setMat(active[0]);}
     buildMatSel();buildSwatches();redraw();updateColorLimitPreviews();calcMats();buildHLList();
     updateAdjustComparePreview();
     updateSrcPreview();
@@ -19287,8 +19485,6 @@ function doConvert(preferredLimit){
   buildMergeMap(targetCount, usage);
   applyMergeMapFrom(origPixels);
   if(targetCount < usedCount) smoothTinyColorIslands(2);
-  const active = getActivePalette();
-  if(curMat && !active.find(m=>m.id===curMat.id)){if(active.length)setMat(active[0]);}
   buildMatSel();buildSwatches();redraw();updateColorLimitPreviews();calcMats();buildHLList();
   updateSrcPreview();
   document.getElementById('snapshot-wrap').style.display='';setSnapshotDefault();
@@ -19414,8 +19610,6 @@ function onColorLimit(v){
   applyMergeMapFrom(source);
   if(v < Object.keys(usage).length)smoothTinyColorIslands(2);
 
-  const active = getActivePalette();
-  if(curMat && !active.find(m=>m.id===curMat.id)){if(active.length)setMat(active[0]);}
   buildMatSel();buildSwatches();redraw();updateColorLimitPreviews();calcMats();buildHLList();
 }
 
@@ -19602,9 +19796,9 @@ function pickFromSourcePreview(e){
   const [x,y]=sourceCellFromEvent(e);
   const data=prev.getContext('2d').getImageData(x,y,1,1).data;
   if(data[3]<30)return;
-  const palette=srcPickMode==='all'?getGroupFiltered():getActivePalette();
+  const palette=srcPickMode==='all'?ALL_MATS:getActivePalette();
   const m=nearestFromPalette(data[0],data[1],data[2],palette);
-  if(m){setMat(m,srcPickMode==='all');setT('pen');showMsg('元画像から '+m.name+' を選択しました');}
+  if(m){setMat(m);setT('pen');showMsg('元画像から '+m.name+' を選択しました');}
   srcPickMode=null;
   prev.classList.remove('pick-src');
 }
@@ -19883,6 +20077,14 @@ function closeOnboarding(action){
   },4000);
 }
 function initOnboarding(){let hidden=false;try{hidden=localStorage.getItem('pocapoke-hide-onboarding')==='1';}catch(error){console.warn(error);}if(!hidden)openOnboarding(false);}
+const initialPaletteSlider=document.getElementById('cl-sl');
+if(initialPaletteSlider){
+  initialPaletteSlider.max=autoEnabledIds.size;
+  initialPaletteSlider.value=autoEnabledIds.size;
+  document.getElementById('cl-max').textContent=autoEnabledIds.size;
+  document.getElementById('cl-val').textContent=autoEnabledIds.size;
+}
+updatePaletteModeUi();
 initPx();initCanvas();buildMatSel();buildSwatches();buildHLList();
 setMat(ALL_MATS[0]);
 setTimeout(initOnboarding,250);
