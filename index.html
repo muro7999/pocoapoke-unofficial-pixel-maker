@@ -16,11 +16,185 @@ body {
   color:#222;
   min-height:100dvh
 }
+body.app-navigation-ready {
+  padding-left:86px
+}
+.primary-nav {
+  position:fixed;
+  inset:0 auto 0 0;
+  z-index:80;
+  display:none;
+  width:86px;
+  padding:14px 0 10px;
+  background:#242225;
+  color:#fff
+}
+body.app-navigation-ready .primary-nav {
+  display:flex;
+  flex-direction:column
+}
+.primary-nav-brand {
+  margin:0 7px 14px;
+  color:rgba(255,255,255,.55);
+  font-size:9px;
+  font-weight:800;
+  line-height:1.4;
+  text-align:center
+}
+.primary-nav>button {
+  display:grid;
+  place-items:center;
+  gap:3px;
+  min-height:68px;
+  padding:8px 3px;
+  border:0;
+  border-left:3px solid transparent;
+  background:transparent;
+  color:#aaa6ad;
+  cursor:pointer
+}
+.primary-nav>button span {
+  font-size:20px
+}
+.primary-nav>button b {
+  font:700 10px/1.25 inherit;
+  white-space:nowrap
+}
+.primary-nav>button[aria-current=page] {
+  border-left-color:#e8534a;
+  background:rgba(232,83,74,.18);
+  color:#fff
+}
+.primary-nav-help {
+  display:grid;
+  gap:5px;
+  margin:auto 7px 0
+}
+.primary-nav-help button {
+  padding:6px 2px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:6px;
+  background:transparent;
+  color:#d4d0d6;
+  font:700 9px/1.2 inherit;
+  cursor:pointer
+}
+.app-context-bar {
+  position:sticky;
+  top:0;
+  z-index:44;
+  display:none;
+  align-items:center;
+  gap:7px;
+  min-height:36px;
+  padding:7px 14px;
+  border-bottom:1px solid #e7e2dc;
+  background:rgba(255,255,255,.96);
+  color:#302c28;
+  font-size:11px;
+  backdrop-filter:blur(8px)
+}
+body.app-navigation-ready .app-context-bar {
+  display:flex
+}
+.app-context-dot {
+  width:7px;
+  height:7px;
+  flex:none;
+  border-radius:50%;
+  background:#7ccf96
+}
+#app-context-title {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+#app-context-status {
+  margin-left:auto;
+  color:#8a837b;
+  text-align:right
+}
+.mobile-help-menu {
+  display:none;
+  flex:none;
+  padding:4px 7px;
+  border:1px solid #d9d3ca;
+  border-radius:6px;
+  background:#fff;
+  color:#625b50;
+  font:700 10px/1.2 inherit
+}
+body.app-navigation-ready .app-primary-view {
+  display:none
+}
+body.app-navigation-ready[data-app-view=convert] #app-view-convert {
+  display:block
+}
+body.app-navigation-ready[data-app-view=gallery] #works-modal,
+body.app-navigation-ready[data-app-view=build] #integrated-work-modal {
+  position:static;
+  inset:auto;
+  z-index:auto;
+  display:block;
+  min-height:calc(100dvh - 36px);
+  padding:18px;
+  overflow:visible;
+  background:#f5f3ef
+}
+body.app-navigation-ready[data-app-view=gallery] #works-modal>.modal-card {
+  width:min(1080px,100%);
+  max-height:none;
+  margin:0 auto;
+  overflow:visible;
+  box-shadow:0 2px 12px rgba(0,0,0,.08)
+}
+.build-empty-state {
+  display:none;
+  width:min(560px,calc(100% - 24px));
+  margin:72px auto;
+  padding:28px 20px;
+  border:1px solid #e1d9cd;
+  border-radius:14px;
+  background:#fff;
+  color:#625b50;
+  text-align:center;
+  box-shadow:0 4px 18px rgba(0,0,0,.06)
+}
+.build-empty-state>span {
+  display:block;
+  margin-bottom:8px;
+  font-size:32px
+}
+.build-empty-state>strong {
+  display:block;
+  color:#302c28;
+  font-size:17px
+}
+.build-empty-state p {
+  margin:7px 0 16px;
+  font-size:12px;
+  line-height:1.6
+}
+.build-empty-state>div {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap
+}
+body.app-navigation-ready[data-app-view=build] #integrated-work-modal:not(.has-work) .build-empty-state {
+  display:block
+}
+body.app-navigation-ready[data-app-view=build] #integrated-work-modal:not(.has-work)>.modal-card {
+  display:none
+}
+body.app-navigation-ready[data-app-view=build] #integrated-work-modal.has-work>.build-empty-state {
+  display:none
+}
 header {
   position:relative;
   background:linear-gradient(135deg,#e8534a,#c0392b);
   color:#fff;
-  padding:12px 430px 12px 20px;
+  padding:12px 210px 12px 20px;
   min-height:68px
 }
 header h1 {
@@ -113,6 +287,51 @@ header p {
   gap:6px;
   flex-wrap:wrap;
   margin-top:8px
+}
+.export-actions {
+  position:relative;
+  align-items:stretch;
+  justify-content:flex-start;
+  flex-wrap:nowrap
+}
+.export-actions>.btn {
+  flex:0 0 auto
+}
+.export-more {
+  position:relative;
+  flex:0 0 auto
+}
+.export-more>summary {
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:100%;
+  min-height:34px;
+  padding:4px 8px;
+  list-style:none;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer
+}
+.export-more>summary::-webkit-details-marker {display:none}
+.export-more-menu {
+  position:absolute;
+  z-index:50;
+  right:0;
+  bottom:calc(100% + 6px);
+  display:grid;
+  gap:5px;
+  width:190px;
+  padding:7px;
+  border:1px solid #d8d0c5;
+  border-radius:9px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(42,35,28,.18)
+}
+.export-more:not([open]) .export-more-menu {display:none}
+.export-more-menu .btn {
+  width:100%;
+  text-align:left
 }
 .srow {
   display:flex;
@@ -600,9 +819,56 @@ canvas {
   gap:12px;
   align-items:start
 }
-.edit-pnl>.lbl {
+.edit-pnl>.lbl,.edit-pnl-head {
   grid-column:1/-1
 }
+.palette-title-row {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:4px 8px;
+  flex-wrap:wrap
+}
+.palette-title-row .lbl {margin-bottom:0}
+.palette-title-row .spec-link {
+  min-height:22px;
+  padding:1px 3px;
+  font-size:9px
+}
+.edit-pnl-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px
+}
+.edit-pnl-head .lbl {margin:0}
+.edit-tool-entry {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 6px 5px 10px;
+  border:1px solid #dfcff0;
+  border-radius:10px;
+  background:#faf6ff
+}
+.edit-tool-entry>span {
+  color:#6b5a7b;
+  font-size:10px;
+  font-weight:600
+}
+.edit-tool-button {
+  border:1px solid #7142ad;
+  border-radius:8px;
+  background:#7142ad;
+  color:#fff;
+  padding:7px 12px;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(113,66,173,.24)
+}
+.edit-tool-button:hover {background:#5b318f}
 .palette-area {
   min-width:0;
   position:sticky;
@@ -618,6 +884,7 @@ canvas {
   height:100%;
   max-height:none;
   overflow:auto;
+  padding-bottom:max(32px,env(safe-area-inset-bottom));
   margin:0;
   border-radius:0;
   box-shadow:none
@@ -640,7 +907,7 @@ canvas {
   height:100dvh;
   background:#fff;
   box-shadow:-8px 0 24px rgba(0,0,0,.16);
-  z-index:60;
+  z-index:90;
   transform:translateX(100%);
   transition:transform .18s ease;
   border-left:1px solid #eee
@@ -671,11 +938,11 @@ canvas {
 .control-drawer {
   display:block;
   position:fixed;
-  top:0;
+  top:40px;
   left:0;
   width:380px;
   max-width:94vw;
-  height:100dvh;
+  height:calc(100dvh - 40px);
   background:#fff;
   box-shadow:8px 0 24px rgba(0,0,0,.16);
   z-index:40;
@@ -684,6 +951,12 @@ canvas {
   border-right:1px solid #eee;
   padding:14px;
   overflow:auto
+}
+@media(min-width:901px) {
+  body.app-navigation-ready .control-drawer {
+    left:86px;
+    max-width:calc(100vw - 86px)
+  }
 }
 .control-drawer.open {
   transform:translateX(0)
@@ -714,11 +987,12 @@ canvas {
 @media(max-width:760px) {
   .control-drawer {
     top:auto;
-    bottom:0;
+    bottom:66px;
     left:0;
     width:100%;
     max-width:none;
     height:var(--control-sheet-height,58dvh);
+    max-height:calc(100dvh - 66px);
     border-right:0;
     border-top:1px solid #eee;
     border-radius:14px 14px 0 0;
@@ -1058,11 +1332,492 @@ body.modal-open {
   border-top:1px solid rgba(0,0,0,.08)
 }
 .modal-close {
+  flex:none;
   border:1px solid #ddd;
   background:#fff;
   border-radius:7px;
   padding:5px 10px;
+  cursor:pointer;
+  white-space:nowrap
+}
+.spec-link {
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  width:auto;
+  min-height:24px;
+  margin:2px 0 0;
+  padding:2px 3px;
+  border:0;
+  border-radius:4px;
+  background:transparent;
+  color:#7142ad;
+  font-family:inherit;
+  font-size:9px;
+  font-weight:700;
+  line-height:1.35;
+  text-align:left;
+  text-decoration:underline;
+  text-decoration-color:rgba(113,66,173,.45);
+  text-underline-offset:2px;
   cursor:pointer
+}
+.spec-link:hover {
+  color:#4f2587;
+  text-decoration-color:currentColor
+}
+.spec-link:focus-visible {
+  outline:2px solid #8d62c4;
+  outline-offset:2px
+}
+.spec-link-list {
+  display:flex;
+  align-items:flex-start;
+  gap:2px 8px;
+  flex-wrap:wrap
+}
+.spec-card {
+  width:min(760px,100%);
+  scroll-behavior:smooth
+}
+.spec-card .modal-head {
+  position:sticky;
+  top:-16px;
+  z-index:4;
+  padding:16px 0 10px;
+  background:#fff;
+  border-bottom:1px solid #eee6f5
+}
+.spec-toc {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+  margin:4px 0 20px;
+  padding:12px;
+  border:1px solid #e4d9f0;
+  border-radius:10px;
+  background:#faf7fd
+}
+.spec-toc>strong {
+  grid-column:1/-1;
+  font-size:12px
+}
+.spec-toc button {
+  border:1px solid #dfd3eb;
+  border-radius:7px;
+  padding:7px 8px;
+  background:#fff;
+  color:#5e397f;
+  font:700 11px/1.3 inherit;
+  text-align:left;
+  cursor:pointer
+}
+.spec-toc button:hover {
+  border-color:#9e75c5;
+  background:#f5effa
+}
+.spec-sections h2 {
+  margin:22px 0 10px;
+  padding:7px 9px;
+  border-left:4px solid #8d62c4;
+  border-radius:0 7px 7px 0;
+  background:#f5effa;
+  color:#4d3265;
+  font-size:14px;
+  scroll-margin-top:68px
+}
+.spec-sections section {
+  margin-bottom:18px;
+  padding-bottom:18px;
+  border-bottom:1px solid #eee;
+  scroll-margin-top:68px
+}
+.spec-sections h3 {
+  margin:0 0 6px;
+  font-size:13px
+}
+.spec-sections p,.spec-sections li {
+  margin:0;
+  color:#444;
+  font-size:12px;
+  line-height:1.7
+}
+.spec-sections p+p {
+  margin-top:8px
+}
+.spec-sections ol {
+  margin:0 0 10px;
+  padding-left:22px
+}
+.spec-recommendation {
+  padding:9px 10px;
+  border-radius:8px;
+  background:#f2f8ff;
+  color:#315f8b!important
+}
+.spec-game-inventory {
+  margin:10px 0;
+  padding:12px;
+  border:3px solid #87968c;
+  border-radius:15px;
+  background:linear-gradient(160deg,#f4f8f5,#dfe9e2);
+  color:#29382f;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),0 5px 14px rgba(42,38,34,.16)
+}
+.spec-game-screen-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:9px;
+  padding:3px 5px 8px;
+  border-bottom:1px solid rgba(61,83,69,.2)
+}
+.spec-game-screen-head span {
+  font-size:15px;
+  font-weight:900
+}
+.spec-game-screen-head small {
+  padding:2px 5px;
+  border-radius:999px;
+  background:rgba(61,98,70,.11);
+  font-size:8px
+}
+.spec-game-screen-head b {
+  color:#526b5a;
+  font-size:9px
+}
+.spec-quick-bag {
+  display:block;
+  padding:7px;
+  border:2px solid #e5bc5b;
+  border-radius:11px;
+  background:#fffaf0
+}
+.spec-bag-label {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:6px;
+  margin-bottom:5px
+}
+.spec-bag-label strong {
+  font-size:10px
+}
+.spec-bag-label small {
+  color:#657269;
+  font-size:8px
+}
+.spec-game-slots {
+  display:grid;
+  grid-template-columns:repeat(10,minmax(24px,1fr));
+  gap:5px
+}
+.spec-game-slots i {
+  position:relative;
+  display:grid;
+  place-items:end end;
+  min-height:30px;
+  padding:3px;
+  border:1px solid #cfa56e;
+  border-radius:5px;
+  background:linear-gradient(145deg,#fff3d2 0 47%,#f2c98f 48% 100%);
+  color:#5b4630;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+  font-style:normal;
+  text-shadow:0 1px 0 rgba(255,255,255,.72);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),0 1px 2px rgba(94,72,45,.13)
+}
+.spec-game-slots i::before {
+  content:'';
+  position:absolute;
+  top:6px;
+  left:8px;
+  width:13px;
+  height:13px;
+  border:1px solid rgba(125,91,51,.32);
+  background:rgba(255,255,255,.42);
+  transform:rotate(30deg) skew(-8deg)
+}
+.spec-main-bag {
+  margin-bottom:8px;
+  padding:7px;
+  border-radius:10px;
+  background:rgba(255,255,255,.72)
+}
+.spec-page-tab {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:5px;
+  color:#526159;
+  font-size:8px;
+  font-weight:800
+}
+.spec-page-tab b {
+  color:#8a6822
+}
+.spec-main-bag-slots {
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:4px
+}
+.spec-main-bag-slots i {
+  position:relative;
+  display:grid;
+  place-items:end end;
+  min-height:30px;
+  padding:3px;
+  border-width:1px;
+  border-style:solid;
+  border-color:#cfa56e;
+  border-radius:5px;
+  background:linear-gradient(145deg,#fff3d2 0 47%,#f2c98f 48% 100%);
+  color:#5b4630;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+  font-style:normal;
+  text-shadow:0 1px 0 rgba(255,255,255,.72);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),0 1px 2px rgba(94,72,45,.13)
+}
+.spec-main-bag-slots i::before {
+  content:'';
+  position:absolute;
+  top:4px;
+  left:5px;
+  width:8px;
+  height:8px;
+  border:1px solid rgba(125,91,51,.32);
+  background:rgba(255,255,255,.42);
+  transform:rotate(30deg) skew(-8deg)
+}
+.spec-next-pages {
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-top:7px;
+  font-size:8px
+}
+.spec-next-pages span,.spec-next-pages em {
+  padding:4px 7px;
+  border:1px solid #cbd6cd;
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  color:#46564c;
+  font-style:normal
+}
+.spec-next-pages b {
+  color:#85651f
+}
+.spec-inventory-rule {
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-top:9px;
+  color:#46564c;
+  font-size:9px;
+  font-weight:800
+}
+.spec-inventory-rule b {
+  color:#85651f
+}
+.spec-room-diagram {
+  margin:10px 0;
+  overflow:hidden;
+  border:3px solid #635a4f;
+  border-radius:15px;
+  background:#ede1c9;
+  box-shadow:0 5px 14px rgba(42,38,34,.13)
+}
+.spec-room-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 11px;
+  background:#514a43;
+  color:#fff
+}
+.spec-room-head strong {
+  font-size:11px
+}
+.spec-room-head span {
+  color:#d7d1cb;
+  font-size:8px
+}
+.spec-room-grid {
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(200px,1fr) auto minmax(130px,.7fr);
+  grid-template-areas:'linked path far' 'formula formula formula';
+  align-items:center;
+  gap:12px 18px;
+  min-height:0;
+  padding:28px 36px 26px;
+  background-color:#d8c69f;
+  background-image:linear-gradient(rgba(96,77,53,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(96,77,53,.12) 1px,transparent 1px);
+  background-size:34px 34px
+}
+.spec-room-grid::before {
+  content:'';
+  position:absolute;
+  inset:17px;
+  border:7px solid #88725d;
+  border-radius:6px;
+  box-shadow:inset 0 0 0 3px #bca47d
+}
+.spec-room-object {
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  min-width:95px;
+  padding:7px;
+  border:2px solid #5c5044;
+  border-radius:8px;
+  background:#fff8e9;
+  color:#41382f;
+  text-align:center;
+  box-shadow:0 3px 0 rgba(75,60,45,.2)
+}
+.spec-room-object i {
+  font-size:22px;
+  font-style:normal
+}
+.spec-room-object b {
+  font-size:9px
+}
+.spec-room-object em {
+  color:#746658;
+  font-size:8px;
+  font-style:normal
+}
+.spec-linked-layout {
+  position:relative;
+  z-index:1;
+  grid-area:linked;
+  justify-self:center;
+  display:grid;
+  grid-template-columns:repeat(6,30px);
+  grid-template-rows:repeat(3,30px);
+  gap:2px
+}
+.spec-linked-layout::before {
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border:2px solid rgba(86,72,55,.3);
+  border-radius:8px;
+  background:rgba(255,255,255,.18)
+}
+.spec-linked-layout span {
+  z-index:1;
+  display:grid;
+  place-content:center;
+  border:2px solid #549069;
+  border-radius:6px;
+  background:#edf8ef;
+  color:#315a40;
+  font-size:8px;
+  font-weight:900;
+  line-height:1.1;
+  text-align:center
+}
+.spec-linked-layout small {font-size:7px}
+.spec-linked-layout .linked-rear-left {grid-area:1/2/2/4}
+.spec-linked-layout .linked-rear-right {grid-area:1/4/2/6}
+.spec-linked-layout .linked-side-left {grid-area:2/2/4/3}
+.spec-linked-layout .linked-craft {grid-area:2/3/3/5;border-color:#9a763a;background:#e9d5ac;color:#624b27}
+.spec-linked-layout .linked-side-right {grid-area:2/5/4/6}
+.spec-linked-layout .linked-rear-left,.spec-linked-layout .linked-rear-right,.spec-linked-layout .linked-craft {
+  background-image:linear-gradient(90deg,transparent calc(50% - 1px),rgba(66,55,42,.3) calc(50% - 1px),rgba(66,55,42,.3) calc(50% + 1px),transparent calc(50% + 1px))
+}
+.spec-linked-layout .linked-side-left,.spec-linked-layout .linked-side-right {
+  background-image:linear-gradient(transparent calc(50% - 1px),rgba(66,55,42,.3) calc(50% - 1px),rgba(66,55,42,.3) calc(50% + 1px),transparent calc(50% + 1px))
+}
+.spec-count-formula {
+  position:relative;
+  z-index:1;
+  grid-area:formula;
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:9px;
+  font-weight:800
+}
+.spec-count-formula span,.spec-count-formula strong {padding:5px 7px;border-radius:6px;background:#fff}
+.spec-count-formula strong {background:#e7f5ea;color:#287544}
+.spec-room-object.far-box {grid-area:far;justify-self:center;border-color:#d09b39;background:#fff6dc}
+.spec-room-path {
+  position:relative;
+  z-index:2;
+  grid-area:path;
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  color:#655844;
+  font-size:8px;
+  font-weight:800;
+  text-align:center;
+  white-space:nowrap
+}
+.spec-room-path b {
+  color:#348357;
+  font-size:15px;
+  letter-spacing:2px
+}
+.spec-compare-table {
+  display:grid;
+  margin:10px 0;
+  overflow:hidden;
+  border:1px solid #ddd5c8;
+  border-radius:9px
+}
+.spec-compare-table>[role=row] {
+  display:grid;
+  grid-template-columns:1fr 1.25fr .7fr
+}
+.spec-compare-table>[role=row]+[role=row] {
+  border-top:1px solid #e8e1d7
+}
+.spec-compare-table span,.spec-compare-table strong,.spec-compare-table b {
+  padding:7px 8px;
+  font-size:11px
+}
+.spec-compare-table strong {
+  background:#f5f3ef
+}
+.spec-bad {
+  color:#ad3d31
+}
+.spec-good {
+  color:#277342
+}
+.spec-flow {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-wrap:wrap;
+  margin:10px 0
+}
+.spec-flow span {
+  padding:6px 8px;
+  border:1px solid #d9cde5;
+  border-radius:999px;
+  background:#faf7fd;
+  color:#51366b;
+  font-size:10px;
+  font-weight:700
+}
+.spec-flow b {
+  color:#8d62c4;
+  font-size:11px
 }
 .modal-actions,.gallery-tools {
   display:flex;
@@ -1110,11 +1865,13 @@ body.modal-open {
 .work-card {
   border:1px solid #e4e0dc;
   border-radius:11px;
-  overflow:hidden;
+  overflow:visible;
   background:#fff
 }
 .work-thumb {
   height:150px;
+  overflow:hidden;
+  border-radius:10px 10px 0 0;
   background:#eee;
   display:flex;
   align-items:center;
@@ -1174,6 +1931,42 @@ body.modal-open {
 .work-actions .danger {
   color:#c33;
   border-color:#f0caca
+}
+.work-more {
+  position:relative
+}
+.work-more summary {
+  display:grid;
+  place-items:center;
+  min-width:30px;
+  min-height:27px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  background:#fff;
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
+  list-style:none
+}
+.work-more summary::-webkit-details-marker {
+  display:none
+}
+.work-more>div {
+  position:absolute;
+  right:0;
+  z-index:8;
+  display:grid;
+  min-width:100px;
+  margin-top:4px;
+  padding:5px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.16)
+}
+.work-more>div button {
+  width:100%;
+  text-align:left
 }
 .share-warning {
   font-size:12px;
@@ -1373,6 +2166,34 @@ body.modal-open {
   font-size:11px;
   color:#777
 }
+.onboarding-flow {
+  grid-template-columns:repeat(3,1fr);
+  padding-left:0;
+  counter-reset:onboarding
+}
+.onboarding-flow li {
+  position:relative;
+  list-style:none;
+  min-height:132px;
+  padding:16px 12px;
+  text-align:center
+}
+.onboarding-flow li:not(:last-child)::after {
+  content:'›';
+  position:absolute;
+  top:50%;
+  right:-10px;
+  z-index:1;
+  color:#d8584b;
+  font-size:25px;
+  font-weight:800;
+  transform:translateY(-50%)
+}
+.onboarding-icon {
+  display:block!important;
+  margin-bottom:7px;
+  font-size:26px!important
+}
 .app-toast {
   position:fixed;
   left:50%;
@@ -1402,25 +2223,63 @@ body.modal-open {
   }
 }
 @media(max-width:900px) {
+  body.app-navigation-ready {
+    padding-left:0;
+    padding-bottom:66px
+  }
+  .primary-nav {
+    inset:auto 0 0;
+    width:auto;
+    height:66px;
+    padding:0;
+    border-top:1px solid #3b383d
+  }
+  body.app-navigation-ready .primary-nav {
+    display:grid;
+    grid-template-columns:repeat(3,1fr)
+  }
+  .primary-nav-brand,.primary-nav-help {
+    display:none
+  }
+  .primary-nav>button {
+    min-height:65px;
+    padding:5px 2px;
+    border-left:0;
+    border-top:3px solid transparent
+  }
+  .primary-nav>button[aria-current=page] {
+    border-top-color:#e8534a
+  }
+  .primary-nav>button span {
+    font-size:18px
+  }
+  .primary-nav>button b {
+    font-size:10px
+  }
+  .app-context-bar {
+    min-height:40px;
+    padding:7px 9px
+  }
+  .mobile-help-menu {
+    display:block
+  }
+  body.app-navigation-ready[data-app-view=gallery] #works-modal,
+  body.app-navigation-ready[data-app-view=build] #integrated-work-modal {
+    min-height:calc(100dvh - 106px);
+    padding:10px
+  }
   header {
-    padding:64px 14px 12px
+    min-height:0;
+    padding:12px 14px
   }
   .app-header-shell {
-    position:fixed;
-    top:0;
-    right:0;
-    left:0;
-    width:100%;
-    margin-top:0;
-    padding:8px 10px 0;
-    background:#b63e38;
-    box-shadow:0 3px 10px rgba(0,0,0,.16)
+    display:none
   }
   .header-actions {
     position:static;
     margin-top:0;
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:5px
   }
   .header-action {
@@ -1434,8 +2293,11 @@ body.modal-open {
   }
 }
 @media(max-width:430px) {
-  header {
-    padding-top:100px
+  #app-context-status {
+    max-width:42%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
   .header-actions {
     grid-template-columns:repeat(2,minmax(0,1fr))
@@ -1446,6 +2308,89 @@ body.modal-open {
   .onboarding-steps {
     padding-left:21px
   }
+  .onboarding-flow {
+    grid-template-columns:1fr;
+    padding-left:0
+  }
+  .onboarding-flow li {
+    min-height:0;
+    text-align:left;
+    padding:10px 12px 10px 52px
+  }
+  .onboarding-flow li:not(:last-child)::after {
+    top:auto;
+    right:50%;
+    bottom:-17px;
+    transform:rotate(90deg)
+  }
+  .onboarding-icon {
+    position:absolute;
+    left:13px;
+    top:12px
+  }
+  .spec-toc {
+    grid-template-columns:1fr
+  }
+  .spec-game-screen-head,.spec-quick-bag {
+    grid-template-columns:1fr
+  }
+  .spec-game-screen-head {
+    display:grid
+  }
+  .spec-main-bag-slots {
+    gap:3px
+  }
+  .spec-main-bag-slots i {
+    min-height:30px;
+    padding:3px;
+    font-size:11px
+  }
+  .spec-next-pages {
+    flex-wrap:wrap
+  }
+  .spec-inventory-rule {
+    align-items:center;
+    gap:3px;
+    font-size:8px
+  }
+  .spec-room-head {
+    align-items:flex-start;
+    flex-direction:column
+  }
+  .spec-room-grid {
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:'linked' 'formula' 'path' 'far';
+    gap:12px;
+    min-height:0;
+    padding:28px 18px
+  }
+  .spec-linked-layout {transform:none}
+  .spec-count-formula {justify-content:center;flex-wrap:wrap}
+  .spec-room-path {transform:none}
+  .spec-room-path b {transform:rotate(90deg)}
+  .spec-room-object.far-box {transform:none}
+  .spec-sections h2,.spec-sections section {
+    scroll-margin-top:104px
+  }
+}
+@media(min-width:761px) and (max-width:900px) {
+  .control-drawer {height:calc(100dvh - 106px)}
+}
+.craft-prep-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 0;
+  border-bottom:1px solid #eee
+}
+.craft-prep-row .craft-note {
+  margin:2px 0 0;
+  font-size:10px
+}
+.craft-prep-row .mcnt {
+  flex:none;
+  font-size:12px
 }
 @media(prefers-reduced-motion:reduce) {
   .tab-guide {
@@ -1473,7 +2418,7 @@ body.modal-open {
   overscroll-behavior-y:contain;
   border-radius:0;
   padding:10px 12px;
-  background:#f6f3ee;
+  background:linear-gradient(180deg,#f8f6f2 0,#f3efe8 100%);
   color:#292520;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
 }
@@ -1485,6 +2430,12 @@ body.modal-open {
   background:rgba(246,243,238,.96);
   padding:8px 10px;
   border-bottom:1px solid #ddd5c8
+}
+@media(min-width:760px) {
+  .work-view-head canvas {
+    width:96px;
+    height:96px
+  }
 }
 .work-view-head-shell {
   position:sticky;
@@ -1530,11 +2481,25 @@ body.modal-open {
 }
 .work-view-head-actions {
   display:flex;
+  flex-direction:column;
+  gap:2px;
+  align-items:flex-end
+}
+.work-view-action-buttons {
+  display:flex;
   gap:6px;
   align-items:center
 }
-.work-view-head-actions .modal-close {
+.work-view-action-buttons .modal-close {
   white-space:nowrap
+}
+.work-view-share-note {
+  align-self:flex-end;
+  min-height:24px;
+  margin:1px 0 0;
+  padding:2px 4px;
+  font-size:11px;
+  line-height:1.35
 }
 .work-view-summary {
   padding:4px 10px 8px;
@@ -1578,13 +2543,17 @@ body.modal-open {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:6px;
-  margin:0 10px 6px
+  max-width:1480px;
+  margin:0 auto 6px;
+  padding:0 10px
 }
 .work-view-controls {
   display:flex;
   gap:6px;
   align-items:center;
-  margin:0 10px 8px;
+  max-width:1480px;
+  margin:0 auto 8px;
+  padding:0 10px;
   overflow:auto
 }
 .work-view-nav button,.work-view-controls button,.work-view-zoom button {
@@ -1614,15 +2583,209 @@ body.modal-open {
 .work-view-controls button.danger {
   color:#a23a31
 }
+.work-view-axis-help {
+  display:flex;
+  align-items:center;
+  gap:4px;
+  width:calc(100% - 20px);
+  max-width:1460px;
+  margin:-4px auto 9px;
+  color:#746c62;
+  font-size:10px
+}
+.work-view-axis-help .spec-link {
+  min-height:24px;
+  margin:0;
+  padding:2px 4px;
+  font-size:11px;
+  font-weight:600
+}
 .work-view-layout {
   display:grid;
-  grid-template-columns:minmax(0,1fr) 320px;
-  gap:10px;
-  padding:0 10px;
+  grid-template-columns:minmax(0,1fr) minmax(320px,380px);
+  gap:16px;
+  width:calc(100% - 20px);
+  max-width:none;
+  margin:0 auto;
+  padding:0;
   min-width:0
 }
 .work-view-layout>* {
   min-width:0
+}
+.work-view-layout>aside {
+  position:sticky;
+  top:48px;
+  align-self:start
+}
+.work-view-layout>section {
+  width:100%;
+  justify-self:stretch
+}
+.work-view-prep-panel,.work-view-material-step-panel,.work-view-after-check {
+  border-color:#cfc1ad;
+  box-shadow:0 2px 8px rgba(74,61,45,.08)
+}
+.work-view-prep-panel,.work-view-material-step-panel {
+  width:calc(100% - 20px);
+  max-width:none;
+  margin:0 auto 10px;
+  padding:0;
+  overflow:hidden
+}
+.work-view-prep-panel summary,.work-view-material-step-panel summary {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:48px;
+  padding:10px 12px;
+  background:#fff9ed;
+  cursor:pointer;
+  list-style:none
+}
+.work-view-prep-panel summary::-webkit-details-marker,.work-view-material-step-panel summary::-webkit-details-marker {display:none}
+.work-view-prep-panel summary::after,.work-view-material-step-panel summary::after {
+  content:'開く';
+  margin-left:auto;
+  color:#7a6341;
+  font-size:10px;
+  font-weight:800
+}
+.work-view-prep-panel[open] summary::after,.work-view-material-step-panel[open] summary::after {content:'閉じる'}
+.work-view-prep-panel summary strong,.work-view-material-step-panel summary strong {font-size:15px}
+.work-view-prep-panel summary em,.work-view-material-step-panel summary em {
+  color:#7a6e60;
+  font-size:10px;
+  font-style:normal
+}
+.work-view-prep-content {
+  max-height:36dvh;
+  overflow:auto;
+  padding:8px 12px 12px;
+  border-top:1px solid #eadfcf
+}
+.work-view-prep-content .spec-link {
+  min-height:24px;
+  padding:2px 4px;
+  font-size:11px;
+  line-height:1.35
+}
+.work-view-prep-content .work-view-craft {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:start
+}
+.work-view-prep-content .work-view-craft-section {
+  min-width:0;
+  padding:10px;
+  border:1px solid #e4ddd3;
+  border-radius:9px;
+  background:#fff
+}
+.work-view-material-step-panel summary {background:#f2faf5}
+.work-view-material-step-content {
+  max-height:48dvh;
+  overflow:auto;
+  padding:10px 12px 12px;
+  border-top:1px solid #d8e9de
+}
+.work-view-material-step-content #work-view-materials {
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  align-items:stretch;
+  padding:1px
+}
+.work-view-material-step-content .work-view-material {
+  display:grid;
+  grid-template-rows:1fr auto
+}
+.work-view-material-step-content .work-view-material-main {
+  grid-template-columns:36px minmax(0,1fr);
+  gap:6px;
+  padding:6px
+}
+.work-view-material-step-content .work-view-material-main>.work-view-swatch {
+  grid-row:1 / span 2
+}
+.work-view-material-step-content .work-view-material-count {
+  grid-column:2;
+  justify-self:start
+}
+.work-view-material-step-content .work-view-swatch {
+  padding:4px 0;
+  font-size:14px
+}
+.work-view-material-step-content .work-view-material-name {font-size:12px}
+.work-view-material-step-content .work-view-material-count {font-size:12px}
+.work-view-step-badge {
+  display:inline-grid;
+  place-items:center;
+  flex:0 0 auto;
+  width:23px;
+  height:23px;
+  border-radius:50%;
+  background:#2f8f62;
+  color:#fff;
+  font-size:12px;
+  font-weight:900
+}
+.work-view-main-step-title {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-height:42px;
+  margin:0 0 8px;
+  padding:7px 10px;
+  border:1px solid #d7e5dc;
+  border-radius:10px;
+  background:#f2faf5;
+  color:#292520
+}
+.work-view-main-step-title strong {font-size:15px}
+.work-view-top-details {
+  margin-bottom:10px;
+  padding:8px 0 2px;
+  border:1px solid #ddd5c8;
+  border-radius:10px;
+  background:rgba(255,255,255,.72)
+}
+.work-view-layout .work-view-summary {padding:2px 10px 8px}
+.work-view-layout .work-view-nav {
+  margin:0 0 6px;
+  padding:0 10px
+}
+.work-view-layout .work-view-controls {
+  margin:0 0 8px;
+  padding:0 10px
+}
+.work-view-layout .work-view-axis-help {
+  width:auto;
+  margin:-4px 10px 5px
+}
+.work-view-after-check-title .work-view-step-badge {margin-right:1px}
+@media(max-width:759px) {
+  .work-view-prep-panel summary,.work-view-material-step-panel summary {
+    display:grid;
+    grid-template-columns:23px minmax(0,1fr) auto;
+    gap:7px;
+    padding:9px 8px
+  }
+  .work-view-prep-panel summary em,.work-view-material-step-panel summary em {display:none}
+  .work-view-prep-content,.work-view-material-step-content {
+    max-height:none;
+    overflow:visible;
+    padding:8px 4px 10px
+  }
+  .work-view-prep-content .work-view-craft {
+    grid-template-columns:minmax(0,1fr)
+  }
+  .work-view-prep-content .work-view-craft-section {padding:7px}
+  .work-view-material-step-content #work-view-materials {
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+  .work-view-layout>aside {position:static}
+  .work-view-prep-panel,.work-view-material-step-panel {
+    width:100%;
+    margin:0 0 8px
+  }
 }
 .work-view-zoom {
   display:flex;
@@ -1663,6 +2826,16 @@ body.modal-open {
   width:max-content;
   height:var(--work-view-column-height);
   max-height:var(--work-view-column-height)
+}
+body.app-navigation-ready[data-app-view=build] .work-view-card {
+  max-height:none;
+  overflow:visible
+}
+@media(max-width:1200px) and (min-width:760px) {
+  .work-view-layout {
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:10px
+  }
 }
 .work-view-stage-layout.column-focus>#work-view-row-material-panel {
   min-width:0;
@@ -1923,31 +3096,58 @@ body.modal-open {
   font-size:13px;
   font-weight:800
 }
-.work-view-material-sub {
-  display:block;
-  font-size:11px;
-  color:#746c62
-}
 .work-view-material-count {
   font-weight:800;
   color:#d8584b;
   white-space:nowrap
 }
 .work-view-material-check {
+  position:relative;
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:6px;
+  min-height:40px;
   border-top:1px solid #eee;
-  padding:6px 8px;
+  padding:5px 8px;
   font-size:12px;
   font-weight:800;
   cursor:pointer
 }
 .work-view-material-check input {
-  width:18px;
-  height:18px;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   margin:0;
-  accent-color:#2f8f62
+  opacity:0;
+  cursor:pointer
+}
+.work-view-material-checkmark {
+  pointer-events:none;
+  display:grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  box-sizing:border-box;
+  border:2px solid #cfc7ba;
+  border-radius:50%;
+  background:#fff;
+  color:transparent;
+  font-size:17px;
+  font-weight:900;
+  line-height:1;
+  transition:background .15s,border-color .15s,color .15s,transform .15s
+}
+.work-view-material-check input:focus-visible+.work-view-material-checkmark {
+  outline:3px solid rgba(35,118,78,.28);
+  outline-offset:2px
+}
+.work-view-material-check input:checked+.work-view-material-checkmark {
+  border-color:#23764e;
+  background:#23764e;
+  color:#fff;
+  transform:scale(1.04)
 }
 .work-view-material-prepared-status {
   display:block;
@@ -2004,6 +3204,34 @@ body.modal-open {
   font-size:13px;
   margin:0 0 4px
 }
+.work-view-craft-help {
+  margin:0 0 5px;
+  color:#746c62;
+  font-size:10px;
+  line-height:1.5
+}
+.work-view-prep-row {
+  display:grid;
+  grid-template-columns:minmax(110px,1fr) repeat(3,auto);
+  align-items:center;
+  gap:8px;
+  padding:7px 2px;
+  border-bottom:1px solid #eee;
+  font-size:11px
+}
+.work-view-prep-row>span:not(:first-child) {
+  display:grid;
+  min-width:42px;
+  text-align:right
+}
+.work-view-prep-row small {
+  color:#8a8178;
+  font-size:9px
+}
+.work-view-prep-row strong {
+  color:#d8584b;
+  font-size:12px
+}
 .work-view-craft-row {
   display:flex;
   justify-content:space-between;
@@ -2025,6 +3253,147 @@ body.modal-open {
   background:#fff5e8;
   border-radius:7px;
   padding:6px
+}
+.work-view-after-check {
+  border:2px solid #e3b14e;
+  background:#fffbef;
+  box-shadow:0 4px 14px rgba(112,82,24,.12)
+}
+.work-view-after-check-title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px
+}
+.work-view-after-check-title>strong {flex:1}
+.work-view-tips-link {
+  min-height:24px;
+  margin:0;
+  padding:2px 4px;
+  font-size:11px;
+  font-weight:600
+}
+.work-view-error-lead {
+  margin:7px 0;
+  color:#625a50;
+  font-size:11px;
+  line-height:1.55
+}
+.work-view-error-overview {
+  display:grid;
+  place-items:center;
+  margin:8px 0;
+  padding:7px;
+  overflow:hidden;
+  border:1px solid #d6cdbf;
+  border-radius:8px;
+  background-color:#d8d3ca;
+  background-image:linear-gradient(45deg,#c9c3b9 25%,transparent 25%),linear-gradient(-45deg,#c9c3b9 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#c9c3b9 75%),linear-gradient(-45deg,transparent 75%,#c9c3b9 75%);
+  background-position:0 0,0 4px,4px -4px,-4px 0;
+  background-size:8px 8px
+}
+.work-view-error-overview>div {
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+  margin-bottom:6px;
+  padding:2px 4px;
+  border-radius:5px;
+  background:rgba(255,255,255,.88);
+  color:#5f574e;
+  font-size:9px
+}
+.work-view-error-overview canvas {
+  display:block;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:min(52dvh,520px);
+  border:2px solid #fff;
+  background:rgba(255,255,255,.35);
+  image-rendering:pixelated;
+  box-shadow:0 2px 8px rgba(43,37,31,.2)
+}
+.work-view-error-steps {
+  display:grid;
+  gap:3px;
+  margin:0 0 8px;
+  padding-left:21px;
+  color:#4e473e;
+  font-size:10px;
+  line-height:1.45
+}
+.work-view-error-materials {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:5px;
+  max-height:190px;
+  overflow:auto
+}
+.work-view-error-material {
+  display:grid;
+  grid-template-columns:28px minmax(0,1fr);
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  padding:4px;
+  border:1px solid #d9d0c3;
+  border-radius:7px;
+  background:#fff;
+  color:#38322c;
+  text-align:left;
+  cursor:pointer
+}
+.work-view-error-material span,.work-view-error-status>span {
+  display:grid;
+  place-items:center;
+  min-height:26px;
+  border:1px solid rgba(0,0,0,.14);
+  border-radius:5px;
+  color:#201d19;
+  font-size:12px;
+  font-weight:900
+}
+.work-view-error-material b {
+  overflow:hidden;
+  font-size:10px;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.work-view-error-material.on {
+  border-color:#d8584b;
+  outline:2px solid rgba(216,88,75,.2);
+  background:#fff4ef
+}
+.work-view-error-status {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-height:40px;
+  margin-top:8px;
+  padding:6px 7px;
+  border-radius:7px;
+  background:#f3eee5;
+  color:#655d53;
+  font-size:10px;
+  line-height:1.4
+}
+.work-view-error-status>span {
+  width:28px;
+  flex:none
+}
+.work-view-error-status>strong {
+  color:#302a25
+}
+.work-view-error-status button {
+  margin-left:auto;
+  padding:4px 6px;
+  border:1px solid #cfc5b8;
+  border-radius:6px;
+  background:#fff;
+  color:#514940;
+  font-size:9px;
+  white-space:nowrap
 }
 .work-view-group {
   display:grid;
@@ -2286,7 +3655,7 @@ body.modal-open {
 }
 @media(max-width:759px) {
   .work-view-card {
-    padding:10px
+    padding:6px
   }
   .work-view-head {
     align-items:flex-start;
@@ -2300,8 +3669,14 @@ body.modal-open {
     flex-direction:column;
     align-items:stretch
   }
+  .work-view-action-buttons {
+    display:grid;
+    grid-template-columns:1fr
+  }
+  .work-view-share-note {align-self:flex-start}
   .work-view-layout {
     grid-template-columns:minmax(0,1fr);
+    width:100%;
     padding:0
   }
   .work-view-stage-layout.column-focus {
@@ -2408,19 +3783,19 @@ body.modal-open {
 </style>
 
 </head>
-<body>
+<body data-app-view="convert">
+<nav class="primary-nav" aria-label="主要画面">
+  <div class="primary-nav-brand" aria-hidden="true">ぽこあ<br>ドット絵</div>
+  <button type="button" data-app-view-target="convert" onclick="navigateAppView('convert')"><span aria-hidden="true">🖼️</span><b>画像を変換</b></button>
+  <button type="button" data-app-view-target="gallery" onclick="navigateAppView('gallery')"><span aria-hidden="true">📚</span><b>マイ作品</b></button>
+  <button type="button" data-app-view-target="build" onclick="navigateAppView('build')"><span aria-hidden="true">🧱</span><b>ゲームで作る</b></button>
+  <div class="primary-nav-help"><button type="button" onclick="openOnboarding(true)">使い方</button><button type="button" onclick="openSpecModal()">仕様</button></div>
+</nav>
+<div class="app-context-bar" id="app-context-bar"><span class="app-context-dot" aria-hidden="true"></span><strong id="app-context-title">作品が選択されていません</strong><span id="app-context-status">画像を変換するか、マイ作品から選んでください</span><button class="mobile-help-menu" type="button" onclick="openHelpMenu()">ヘルプ</button></div>
+<div id="app-view-convert" class="app-primary-view">
 <header>
   <h1>🎨 【非公式】ぽこあポケモン 推しドット絵メーカー</h1>
   <p>好きな画像をアップロードすると、ぽこあポケモンの内装素材でドット絵に変換します。色数・色味の調整は、画像をアップロードした場合のみ行えます。</p>
-  <div class="sticky-header-shell app-header-shell">
-  <nav class="header-actions collapsible-header-body" id="app-action-header" aria-label="ツールメニュー">
-    <button class="header-action control-action" type="button" onclick="toggleControlDrawer()">🎨 色調整</button>
-    <button class="header-action material-action" id="material-nav-button" type="button" onclick="toggleMaterialDrawer()">📦 素材リスト<span id="material-update-dot" class="update-dot" aria-label="更新あり"></span></button>
-    <button class="header-action gallery-action" type="button" onclick="openWorksGallery()">📚 マイ作品</button>
-    <button class="header-action help-action" type="button" onclick="openOnboarding(true)">？ 使い方</button>
-  </nav>
-  <button class="header-grip" type="button" data-collapse-target="app-action-header" aria-expanded="true" aria-label="ツールメニューをたたむ">▲</button>
-  </div>
 </header>
 <a id="save-link" download="oshi_pocapoke_50x50.png"></a>
 <a id="csv-link" download="oshi_pocapoke_50x50.csv"></a>
@@ -2443,6 +3818,7 @@ body.modal-open {
         <input type="range" id="gs-sl" min="8" max="128" value="50" step="1" oninput="onSlider()">
         <span class="sv" id="gs-val">50x50</span>
       </div>
+      <button type="button" class="spec-link" onclick="openSpecSection('spec-default-size')">※なぜ初期値が50×50なの?</button>
       <span class="badge" id="rbadge">比率 1:1</span>
 
     </div>
@@ -2463,9 +3839,9 @@ body.modal-open {
   </div>
 
   <div class="pnl edit-pnl">
-    <div class="lbl">編集エリア</div>
+    <div class="edit-pnl-head"><div class="lbl">編集エリア</div><div class="edit-tool-entry"><span>変換後の色が気になるとき</span><button class="edit-tool-button" id="edit-color-adjust-button" type="button">🎨 色数・色味を調整</button></div></div>
     <div class="palette-area">
-    <div class="lbl">素材パレット <span style="font-weight:400;color:#aaa;font-size:10px">（グループ名をクリックで開閉）</span></div>
+    <div class="palette-title-row"><div class="lbl">素材パレット <span style="font-weight:400;color:#aaa;font-size:10px">（グループ名をクリックで開閉）</span></div><button type="button" class="spec-link" onclick="openSpecSection('spec-material-selection')">※なぜこの種類のブロックなの?</button></div>
     <div class="palette-preset-bar" role="group" aria-label="自動変換の素材パレット">
       <button type="button" data-palette-mode="full" onclick="setPaletteMode('full')">フル <small>247色・非推奨</small></button>
       <button type="button" data-palette-mode="standard" onclick="setPaletteMode('standard')">標準 <small>148色</small></button>
@@ -2490,6 +3866,7 @@ body.modal-open {
           <div>
             <div class="cl-title">🎨 使用色数（素材の種類数）</div>
             <div style="font-size:10px;color:#b06000;margin-top:2px">← 減らすほど似た色を統合して素材集めが楽に</div>
+            <div class="spec-link-list"><button type="button" class="spec-link" onclick="openSpecSection('spec-inventory-tips')">※色のおすすめ数は?</button><button type="button" class="spec-link" onclick="openSpecSection('spec-no-black')">※なぜ黒が出ないの?</button><button type="button" class="spec-link" onclick="openSpecSection('spec-color-shift')">※なぜ色が少し変わるの?</button></div>
           </div>
           <span class="cl-badge" id="cl-val">95</span>
         </div>
@@ -2533,8 +3910,8 @@ body.modal-open {
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
         <div class="cprev" style="margin-bottom:0;flex:1;min-width:0">
           <span class="current-material-caption" title="ペン・塗りつぶしで使用する素材">選択中の素材</span>
-          <div id="cur-dot" style="width:15px;height:15px;border-radius:3px;border:1px solid #ddd;flex-shrink:0;background:#F4EBE6"></div>
-          <span id="cur-name" style="font-size:11px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ぬののカベ</span>
+          <div id="cur-dot" style="width:15px;height:15px;border-radius:3px;border:1px solid #bbb;flex-shrink:0;background:transparent;display:grid;place-items:center;color:#999;font-size:9px">－</div>
+          <span id="cur-name" style="font-size:11px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">素材を選んでください</span>
         </div>
         <div class="tool-strip" id="tool-strip">
           <button class="tb on" id="tb-pen"   onclick="setT('pen')"   title="ペン" data-tool-label="ペン">✏️</button>
@@ -2546,6 +3923,7 @@ body.modal-open {
           <button class="tb"    id="tb-zoom"  onclick="toggleZoom()"  title="ズーム" data-tool-label="ズーム">🔎</button>
           <button class="tb tool-help" id="tb-help" onclick="showToolLabels()" title="アイコンの説明">❓</button>
         </div>
+        <button type="button" class="spec-link" onclick="openSpecSection('spec-edge-protection')">※輪郭が消えにくい理由</button>
         <div class="source-pick-controls">
           <button class="fix-btn" onclick="setSrcPickMode('limited')" title="元画像プレビューから、現在の使用色候補内で一番近い素材を拾う">元画像→使用色</button>
           <button class="fix-btn" onclick="setSrcPickMode('all')" title="元画像プレビューから、全素材候補で一番近い素材を拾う">元画像→全素材</button>
@@ -2565,12 +3943,16 @@ body.modal-open {
           </div>
         </div>
       </div>
-      <div class="brow">
-        <button class="btn gr" onclick="savePng()">💾 PNG保存</button>
-        <button class="btn bl" onclick="exportCSV()">📊 CSV出力</button>
-        <button class="btn" onclick="recalculateMaterialList()">🔄 編集結果の素材数を再集計</button>
+      <div class="brow export-actions">
         <button class="btn ac" onclick="saveCurrentWork()">📚 マイ作品に保存</button>
-        <button class="btn" onclick="openShareDialog()">共有</button>
+        <details class="export-more">
+          <summary class="btn" aria-label="その他の保存・共有" title="その他の保存・共有">…</summary>
+          <div class="export-more-menu">
+            <button class="btn" onclick="savePng();this.closest('details').removeAttribute('open')">💾 PNG保存</button>
+            <button class="btn" onclick="exportCSV();this.closest('details').removeAttribute('open')">📊 CSV出力</button>
+            <button class="btn" onclick="openShareDialog();this.closest('details').removeAttribute('open')">共有</button>
+          </div>
+        </details>
       </div>
       <div id="work-identity" class="work-identity">作品はまだ発行されていません</div>
       <div class="save-msg" id="save-msg"></div>
@@ -2578,40 +3960,32 @@ body.modal-open {
   </div>
 </div>
 
-<div id="mat-drawer" class="mat-drawer">
+<div id="mat-drawer" class="mat-drawer" hidden aria-hidden="true">
   <div class="pnl side-pnl">
-    <div class="drawer-head"><div class="lbl" style="margin-bottom:0">3. 素材リスト &amp; ハイライト</div><button class="drawer-close" onclick="toggleMaterialDrawer(false)">閉じる</button></div>
+    <div class="drawer-head"><div class="lbl" style="margin-bottom:0">3. 素材リスト</div><button class="drawer-close" onclick="toggleMaterialDrawer(false)">閉じる</button></div>
     <div class="tab-bar">
       <div class="tab on" id="tab-mat" onclick="showTab('mat')">素材リスト</div>
-      <div class="tab" id="tab-craft" onclick="showTab('craft')">必要な原材料</div>
-      <div class="tab" id="tab-hl" onclick="showTab('hl')">どこで使う？</div>
+      <div class="tab" id="tab-craft" onclick="showTab('craft')">制作前に用意</div>
     </div>
     <div id="view-mat">
       <div class="empty" id="empty-msg">📦<br>画像を変換すると<br>必要な素材が表示されます</div>
       <div id="mat-content" style="display:none"></div>
     </div>
-    <div id="view-craft" style="display:none"><div id="craft-content" class="craft-content"><div class="empty">🧱<br>画像を変換すると<br>必要な原材料とえのぐが表示されます</div></div></div>
-    <div id="view-hl" style="display:none">
-      <div style="font-size:12px;color:#666;margin-bottom:8px">素材をクリックするとドット絵上でその素材の使用箇所をハイライト表示します。</div>
-      <div id="hl-list"></div>
-      <div id="hl-preview" style="display:none;margin-top:10px">
-        <div class="lbl" id="hl-title">ハイライト中: -</div>
-        <div class="cw"><canvas id="hl-canvas"></canvas></div>
-        <button class="btn" onclick="clearHL()" style="margin-top:6px;font-size:11px">✕ ハイライト解除</button>
-      </div>
-    </div>
+    <div id="view-craft" style="display:none"><div id="craft-content" class="craft-content"><div class="empty">🧱<br>画像を変換すると<br>制作前に用意するものが表示されます</div></div></div>
+    <div class="legacy-highlight-host" hidden aria-hidden="true"><div id="hl-list"></div><div id="hl-preview"><span id="hl-title"></span><canvas id="hl-canvas"></canvas></div></div>
   </div>
 </div>
 </div>
+</div>
 
-<div id="works-modal" class="modal" aria-hidden="true">
+<div id="works-modal" class="modal app-primary-view app-screen" aria-hidden="true">
   <div class="modal-card gallery-card">
     <div class="modal-head">
       <div><strong>📚 マイ作品</strong>
         <div class="modal-sub">作品はこの端末のIndexedDBに保存されます</div>
         <div class="modal-sub">⚠️ プライベートブラウジング中は保存機能が使えない場合があります</div>
       </div>
-      <button class="modal-close" onclick="closeModal('works-modal')">閉じる</button>
+      <button class="modal-close" onclick="navigateAppView('convert')">画像を変換</button>
     </div>
     <div class="gallery-tools">
       <input id="gallery-filter" placeholder="タグ・タイトルで絞り込み" oninput="renderWorksGallery()">
@@ -2623,7 +3997,13 @@ body.modal-open {
   </div>
 </div>
 
-<div id="integrated-work-modal" class="modal work-view-modal" aria-hidden="true">
+<div id="integrated-work-modal" class="modal work-view-modal app-primary-view app-screen" aria-hidden="true">
+  <div id="build-empty-state" class="build-empty-state">
+    <span aria-hidden="true">🧱</span>
+    <strong>制作する作品が選ばれていません</strong>
+    <p>画像を変換して保存するか、マイ作品から選んでください。</p>
+    <div><button class="btn ac" type="button" onclick="navigateAppView('convert')">画像を変換する</button><button class="btn" type="button" onclick="navigateAppView('gallery')">マイ作品から選ぶ</button></div>
+  </div>
   <div class="modal-card work-view-card">
     <div class="sticky-header-shell work-view-head-shell">
     <div class="work-view-head collapsible-header-body" id="work-view-head-body">
@@ -2634,37 +4014,54 @@ body.modal-open {
         <div id="work-view-save-state" class="modal-sub">保存済み</div>
       </div>
       <div class="work-view-head-actions">
-        <button class="modal-close" data-work-action="share-progress">進捗を共有</button>
-        <button class="modal-close" data-work-action="import-progress">進捗を読込</button>
-        <button class="modal-close" data-work-action="close">閉じる</button>
+        <div class="work-view-action-buttons"><button class="modal-close" data-work-action="share-progress">ゲーム内制作の進捗を共有</button><button class="modal-close" data-work-action="import-progress">進捗を読込</button><button class="modal-close" data-work-action="close">マイ作品</button></div>
+        <button type="button" class="spec-link work-view-share-note" onclick="openSpecSection('spec-no-recolor-after-share')">※共有後に色は変えられません</button>
       </div>
     </div>
-    <button class="header-grip" id="work-view-toggle-header" type="button" data-work-action="toggle-header" aria-expanded="true" aria-label="作業ビューヘッダーをたたむ">▲</button>
+    <button class="header-grip" id="work-view-toggle-header" type="button" data-work-action="toggle-header" aria-expanded="true" aria-label="ゲーム内制作ガイドのヘッダーをたたむ">▲</button>
     </div>
-    <div class="work-view-top-details">
-      <div class="work-view-summary">
-        <strong><span id="work-view-stage">1</span><span id="work-view-stage-axis">段目</span></strong>
-        <span id="work-view-progress"></span>
-        <div class="work-view-bar"><div id="work-view-bar-fill"></div></div>
+    <details class="work-view-panel work-view-prep-panel" open>
+      <summary><span class="work-view-step-badge">1</span><strong>制作前に用意するもの</strong><em>準備できたら閉じて、制作へ進めます</em></summary>
+      <div class="work-view-prep-content"><div id="work-view-craft-mode" class="modal-sub">総必要数をもとに計算</div><div class="spec-link-list"><button type="button" class="spec-link" onclick="openSpecSection('spec-blank-vs-paint')">※ブロックとえのぐで集計が違う理由</button></div><div id="work-view-craft" class="work-view-craft"></div></div>
+    </details>
+    <details class="work-view-panel work-view-material-step-panel">
+      <summary><span class="work-view-step-badge">2</span><strong>素材一覧を見ながら各素材を揃える</strong><em>必要数を作り、「用意済み」にします</em></summary>
+      <div class="work-view-material-step-content">
+        <div id="work-view-material-mode" class="work-view-mode-label">総必要数を表示中</div>
+        <div class="work-view-list-tools">
+          <div><button id="work-view-sort-number" data-work-action="sort-number">番号順</button><button id="work-view-sort-count" data-work-action="sort-count">必要数順</button></div>
+          <div><button id="work-view-quantity-total" data-work-action="quantity-total">総必要数</button><button id="work-view-quantity-remaining" data-work-action="quantity-remaining">残り必要数</button></div>
+        </div>
+        <div class="modal-sub">各素材を必要数作り、揃ったら○を選択してください。チェックが付いて「用意済み」になり、各段の素材にも反映されます。</div>
+        <div id="work-view-materials" class="work-view-materials"></div>
       </div>
-      <div class="work-view-nav">
-        <button id="work-view-prev" data-work-action="previous-row">前の段</button>
-        <button id="work-view-done-row" class="primary" data-work-action="complete-row">この段完了</button>
-        <button id="work-view-next" data-work-action="next-row">次の段</button>
-      </div>
-      <div class="work-view-controls">
-        <button id="work-view-bottom" data-work-action="bottom-direction">下から作業</button>
-        <button id="work-view-top" data-work-action="top-direction">通常表示</button>
-        <button id="work-view-rows" data-work-action="row-mode">段ごと</button>
-        <button id="work-view-all" data-work-action="all-mode">全体</button>
-        <button id="work-view-axis-row" data-work-action="axis-row">段主軸</button>
-        <button id="work-view-axis-column" data-work-action="axis-column">列主軸</button>
-        <button id="work-view-clear-highlight" data-work-action="clear-highlight">ハイライト解除</button>
-        <button id="work-view-reset" class="danger" data-work-action="reset-progress">進捗を全リセット</button>
-      </div>
-    </div>
+    </details>
     <div class="work-view-layout">
       <section>
+        <div class="work-view-main-step-title"><span class="work-view-step-badge">3</span><strong>ドット絵を作る</strong></div>
+        <div class="work-view-top-details">
+          <div class="work-view-summary">
+            <strong><span id="work-view-stage">1</span><span id="work-view-stage-axis">段目</span></strong>
+            <span id="work-view-progress"></span>
+            <div class="work-view-bar"><div id="work-view-bar-fill"></div></div>
+          </div>
+          <div class="work-view-nav">
+            <button id="work-view-prev" data-work-action="previous-row">前の段</button>
+            <button id="work-view-done-row" class="primary" data-work-action="complete-row">この段完了</button>
+            <button id="work-view-next" data-work-action="next-row">次の段</button>
+          </div>
+          <div class="work-view-controls">
+            <button id="work-view-bottom" data-work-action="bottom-direction">下から作業</button>
+            <button id="work-view-top" data-work-action="top-direction">通常表示</button>
+            <button id="work-view-rows" data-work-action="row-mode">段ごと</button>
+            <button id="work-view-all" data-work-action="all-mode">全体</button>
+            <button id="work-view-axis-row" data-work-action="axis-row">段主軸</button>
+            <button id="work-view-axis-column" data-work-action="axis-column">列主軸</button>
+            <button id="work-view-clear-highlight" data-work-action="clear-highlight">ハイライト解除</button>
+            <button id="work-view-reset" class="danger" data-work-action="reset-progress">進捗を全リセット</button>
+          </div>
+          <div class="work-view-axis-help"><span aria-hidden="true">ⓘ</span><button type="button" class="spec-link" onclick="openSpecSection('spec-axis-mode')">段主軸と列主軸の違いを見る</button></div>
+        </div>
         <div class="work-view-zoom">
           <button id="work-view-zoom-out" data-work-action="zoom-out">－</button>
           <label>ズーム <input id="work-view-zoom" type="range" min="28" max="58" data-work-action="zoom"></label>
@@ -2681,18 +4078,7 @@ body.modal-open {
         </div>
       </section>
       <aside>
-        <div class="work-view-panel">
-          <strong>素材一覧</strong>
-          <div id="work-view-material-mode" class="work-view-mode-label">総必要数を表示中</div>
-          <div class="work-view-list-tools">
-            <div><button id="work-view-sort-number" data-work-action="sort-number">番号順</button><button id="work-view-sort-count" data-work-action="sort-count">必要数順</button></div>
-            <div><button id="work-view-quantity-total" data-work-action="quantity-total">総必要数</button><button id="work-view-quantity-remaining" data-work-action="quantity-remaining">残り必要数</button></div>
-          </div>
-          <div class="modal-sub">番号をタップするとその素材だけハイライト。「用意済み」は各段の素材にも反映されます</div>
-          <div id="work-view-materials" class="work-view-materials"></div>
-        </div>
-        <div class="work-view-panel"><strong>必要な原材料・えのぐ</strong><div id="work-view-craft-mode" class="modal-sub">総必要数をもとに計算</div><div id="work-view-craft" class="work-view-craft"></div></div>
-        <div class="work-view-panel"><strong>素材グループ合計</strong><div id="work-view-groups-mode" class="modal-sub">現在選択中の必要数モードで集計</div><div id="work-view-groups"></div></div>
+        <div class="work-view-panel work-view-after-check"><div class="work-view-after-check-title"><span class="work-view-step-badge">4</span><strong>作業後チェック</strong><button type="button" class="spec-link work-view-tips-link" onclick="openSpecSection('spec-inventory-tips')">作業Tips</button></div><div id="work-view-error-check"></div></div>
       </aside>
     </div>
   </div>
@@ -2709,7 +4095,7 @@ body.modal-open {
       <button class="btn" onclick="buildProgressQrShare()"><strong>PNGで保存</strong><small>複数枚</small></button>
       <button class="btn" id="progress-gif-export-button" onclick="exportProgressQrGif()"><strong>GIFで保存</strong><small>1ファイル</small></button>
     </div>
-    <div class="share-warning">読み込み先の塗り済みマスと素材の用意済みチェックを、この時点の状態で上書きします。</div>
+    <div class="share-warning">読み込み先の設置済みマスと素材の用意済みチェックを、この時点の状態で上書きします。</div>
     <div id="progress-gif-progress" class="modal-sub" role="status"></div>
     <div id="progress-qr-share" class="qr-share"></div>
   </div>
@@ -2718,7 +4104,7 @@ body.modal-open {
 <div id="progress-import-modal" class="modal" aria-hidden="true">
   <div class="modal-card small-card">
     <div class="modal-head"><strong>進捗を取り込む</strong><button class="modal-close" onclick="closeModal('progress-import-modal')">閉じる</button></div>
-    <div class="save-storage-note">作品本体を先にマイ作品へ取り込んでください。同じ作品IDの塗り済みマスと素材の用意済み状態を上書きします。</div>
+    <div class="save-storage-note">作品本体を先にマイ作品へ取り込んでください。同じ作品IDの設置済みマスと素材の用意済み状態を上書きします。</div>
     <div class="share-options">
       <button class="btn bl share-best" onclick="document.getElementById('progress-json-import').click()"><strong>JSONファイル</strong><small>最も確実</small></button>
       <button class="btn" onclick="closeModal('progress-import-modal');openQrScanner('progress')"><strong>QRを読み取る</strong><small>カメラ／PNG／GIF</small></button>
@@ -2730,7 +4116,7 @@ body.modal-open {
 <div id="work-edit-modal" class="modal" aria-hidden="true">
   <div class="modal-card small-card">
     <div class="modal-head"><strong>作品を保存</strong><button class="modal-close" onclick="closeModal('work-edit-modal')">閉じる</button></div>
-    <div class="save-storage-note">ドット絵と素材情報をこの端末に保存します。元画像そのものは保存されません。保存後もマイ作品の「編集で開く」から修正できます。</div>
+    <div class="save-storage-note">ドット絵と素材情報をこの端末に保存します。元画像そのものは保存されません。保存後もマイ作品の「編集する」から修正できます。</div>
     <label class="field">タイトル<input id="work-title" maxlength="80" placeholder="無題のドット絵"></label>
     <label class="field">タグ（カンマ区切り）<input id="work-tags" maxlength="200" placeholder="建築中, 自宅"></label>
     <div class="modal-actions"><button class="btn ac" onclick="confirmSaveCurrentWork()">保存する</button></div>
@@ -2775,16 +4161,116 @@ body.modal-open {
 </div>
 <div id="onboarding-modal" class="modal" aria-hidden="true">
   <div class="modal-card onboarding-card"><div class="modal-head"><strong>使い方</strong><button class="modal-close" onclick="closeOnboarding('skip')">閉じる</button></div>
-    <ol class="onboarding-steps">
-      <li><strong>画像とサイズを決める</strong><span>画像を選び、グリッドサイズを決めて「変換して素材計算」を押します。</span></li>
-      <li><strong>色数と色味を調整する</strong><span>「色調整」を開き、色数や色味を変えたら「色調整を反映して素材計算」を押します。</span></li>
-      <li><strong>ドット絵を編集する</strong><span>編集エリアで素材を選び、ペン・塗りつぶし・消しゴム・Undoを使って整えます。</span></li>
-      <li><strong>必要数を確認する</strong><span>「素材リスト」で装飾素材・原材料・えのぐと、使われている場所を確認できます。</span></li>
-      <li><strong>マイ作品に保存する</strong><span>保存されるのはドット絵と素材情報です。元画像そのものは保存されません。保存後も「編集で開く」から直せます。</span></li>
-      <li><strong>作る・共有する</strong><span>マイ作品の「作業ビュー」やチェックリストHTMLで制作し、JSON・PNG・GIFで共有できます。</span></li>
+    <ol class="onboarding-steps onboarding-flow">
+      <li><span class="onboarding-icon" aria-hidden="true">🖼️</span><strong>画像を変換</strong><span>画像とサイズを決め、色やドット絵を整えます。</span></li>
+      <li><span class="onboarding-icon" aria-hidden="true">📚</span><strong>マイ作品へ保存</strong><span>作品名を付けて、この端末へ保存します。元画像そのものは保存されません。</span></li>
+      <li><span class="onboarding-icon" aria-hidden="true">🧱</span><strong>ゲーム内で作る</strong><span>「ゲーム内制作ガイド」で必要なブロックを確認し、列ごとの進捗を付けながら作ります。</span></li>
     </ol>
-    <div class="onboarding-note">13素材×19色（247色）に対応。JSON保存が最も確実です。</div>
+    <div class="onboarding-note">13素材×19色（247色）に対応。詳しい変換・保存・制作の仕組みは「仕様」からいつでも確認できます。</div>
     <div class="modal-actions"><button class="btn" onclick="closeOnboarding('skip')">スキップ</button><button class="btn ac" onclick="closeOnboarding('never')">次回から表示しない</button></div>
+  </div>
+</div>
+<div id="spec-modal" class="modal" aria-hidden="true">
+  <div class="modal-card onboarding-card spec-card">
+    <div class="modal-head"><div><strong>このツールの仕様について</strong><div class="modal-sub">操作方法ではなく、変換やゲーム内制作がこの仕組みになっている理由を説明します。</div></div><button class="modal-close" onclick="closeModal('spec-modal')">閉じる</button></div>
+    <nav class="spec-toc" aria-label="仕様についての目次">
+      <strong>目次</strong>
+      <button type="button" onclick="openSpecSection('spec-color-category')">色変換の仕様</button>
+      <button type="button" onclick="openSpecSection('spec-save-category')">保存・共有の仕様</button>
+      <button type="button" onclick="openSpecSection('spec-build-category')">ゲーム内制作ガイドの仕様</button>
+      <button type="button" onclick="openSpecSection('spec-tips-category')">作業を間違えにくくするコツ</button>
+      <button type="button" onclick="openSpecSection('spec-data-category')">データとプライバシー</button>
+    </nav>
+    <div class="spec-sections">
+      <h2 id="spec-color-category">色変換の仕様</h2>
+      <section id="spec-no-black">
+        <h3>なぜ黒が出せないの?</h3>
+        <p>素材の色は、ゲーム内の実際の装飾素材の色をそのまま使っています。純黒や非常に暗い色に対応する素材が存在しないため、変換結果でも真っ黒は再現されません。最も暗い部分は、用意されている素材の中で最も近い暗さの色に変換されます。</p>
+      </section>
+      <section id="spec-color-shift">
+        <h3>なぜ色が元画像と少し変わって見えるの?</h3>
+        <p>このツールは247色の素材の中から、元の色に最も近いものを自動選択しています（人の目の感覚に近いLab色空間で距離を計算）。元画像の色そのものではなく「用意されている素材の中で一番近い色」に置き換わるため、微妙な色の違いが生じます。</p>
+      </section>
+      <section id="spec-material-selection">
+        <h3>なぜこの種類のブロックを使うの?</h3>
+        <p>ドット絵を近くから見ても模様が目立ちにくいように、できるだけ柄の入っていないブロック、または柄の少ないブロックを中心に選んでいます。</p>
+        <p>「標準」と「省素材」では、色だけでなく柄の見え方も含めて候補を整理しています。色味が近いブロックが複数ある場合は、柄の少ない方へまとめることで、使用する素材の種類を抑えながら、近くで見たときの違和感を減らしています。</p>
+      </section>
+      <section id="spec-edge-protection">
+        <h3>輪郭線やハイライトが変換で消えにくいのはなぜ?</h3>
+        <p>周囲との明るさの差が大きい部分（輪郭線・瞳孔・髪のハイライトなど）は、自動的に検出して優先的に色を残す処理を行っています。明るい背景の中の暗い線と、暗い背景の中の明るい線の両方に対応しています。</p>
+      </section>
+
+      <h2 id="spec-save-category">保存・共有の仕様</h2>
+      <section id="spec-no-recolor-after-share">
+        <h3>QRやJSONで共有した後に色を変えられないのはなぜ?</h3>
+        <p>共有データには、完成した「どのマスにどの素材を置くか」の情報のみが含まれます。元画像そのものは含まれていないため、共有を受け取った側で色数や色味を調整し直すことはできません。色を変えたい場合は、元画像を持っている側で調整してから、あらためて共有してください。</p>
+      </section>
+
+      <h2 id="spec-build-category">ゲーム内制作ガイドの仕様</h2>
+      <section id="spec-blank-vs-paint">
+        <h3>ブロックとえのぐで集計方法が違うのはなぜ?</h3>
+        <p>装飾素材はゲーム内で「色を塗る前のブロックを作る」→「えのぐで色を塗る」の2段階でクラフトします。色を塗る前のブロックは、同じ種類であれば色違いをまとめて計算し、えのぐは色ごとに個別に計算しています。これはゲーム内のクラフト手順に合わせた集計方法です。</p>
+      </section>
+      <section id="spec-axis-mode">
+        <h3>段主軸/列主軸は何が変わるの?</h3>
+        <p>ゲーム内制作ガイドで、どちらの向きを「1段」として区切るかを切り替えます。段主軸は横方向、列主軸は縦方向を1段として進捗管理します。</p>
+        <p class="spec-recommendation"><strong>おすすめは列主軸です。</strong>縦方向にブロックを積み上げて進められるため、ゲーム内で横へ移動する必要が少なく、同じ場所に立ったまま作業しやすくなります。作品の形や作り方に応じて、横方向に進めたい場合は段主軸へ切り替えてください。</p>
+      </section>
+      <section id="spec-default-size">
+        <h3>なぜグリッドサイズのデフォルトが50×50なの?</h3>
+        <p>ゲーム内には、一定距離離れた建物がグレースケール化して見えなくなる描画距離の仕様があります。そのため、あまり大きく作っても離れた位置からは見えづらくなってしまいます。また、画面内に収まりやすいサイズという観点でも、50×50前後が扱いやすい上限の目安になります。50×50でも少し大きいと感じる場合があるので、飾りたいものの大きさに応じて小さめに調整するのがおすすめです。</p>
+      </section>
+
+      <h2 id="spec-tips-category">作業を間違えにくくするコツ</h2>
+      <section id="spec-inventory-tips">
+        <h3>手持ちブロックの並べ方</h3>
+        <p class="spec-recommendation"><strong>使用色数は40色以内がおすすめです。</strong>いつでもサブバッグの10枠とメインバッグ1ページ目の30枠に、使用するブロックをまとめて並べられます。</p>
+        <ol><li>ドット絵の変換が終わったら、使用するブロックを最初にすべて作成しておく。</li><li>ゲーム内制作ガイドを「必要数順」に切り替える。</li><li>インベントリへ番号の若い順から配置する。</li></ol>
+        <div class="spec-game-inventory" role="img" aria-label="独自模式図。上段のメインバッグは左下を11番として右へ進み、その上を21番から、最上段を31番から並べる。下段のいつでもサブバッグは1番から10番を横一列に並べる">
+          <div class="spec-game-screen-head"><span>ブロックの持ち方 <small>独自模式図</small></span><b>番号＝制作ガイドの素材番号</b></div>
+          <div class="spec-main-bag">
+            <div class="spec-page-tab">メインバッグ <span>1ページ＝30枠</span><b>ページ 1</b></div>
+            <div class="spec-main-bag-slots"><i>31</i><i>32</i><i>33</i><i>34</i><i>35</i><i>36</i><i>37</i><i>38</i><i>39</i><i>40</i><i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i>11</i><i>12</i><i>13</i><i>14</i><i>15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i></div>
+          </div>
+          <section class="spec-quick-bag"><div class="spec-bag-label"><strong>いつでもサブバッグ</strong><small>バッグを開かずに使える10枠</small></div><div class="spec-game-slots"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div></section>
+          <div class="spec-next-pages"><span><b>ページ2</b> 41〜70</span><span><b>ページ3</b> 71〜100</span><em>以降も30個ずつ</em></div>
+          <div class="spec-inventory-rule"><span>① サブバッグへ1〜10</span><b>→</b><span>② メインバッグ左下から11〜40</span><b>→</b><span>③ 41以降は次ページへ</span></div>
+        </div>
+        <p>ステップ2「素材一覧を見ながら各素材を揃える」で割り当てられた素材番号を、そのままバッグ内の位置へ対応させます。1〜10番はいつでもサブバッグへ左から並べ、11〜40番はメインバッグ1ページ目へ、左下から11〜20、その上を21〜30、最上段を31〜40と並べて持っておきます。41番以降は次のページへ置いてください。1種類が99個を超える場合は、同じブロックを次の空き枠へ分けます。</p>
+      </section>
+      <section id="spec-exchange-cap">
+        <h3>収納ボックスとブロックの置き場所</h3>
+        <p>クラフト画面に表示されるブロック数は、<strong>手持ちと隣接する収納ボックス内の合計</strong>です。クラフト台で表示個数を確認し、必要数を超える分を隣接していない収納ボックスへ移すことで、制作に使う個数を調整できます。</p>
+        <div class="spec-room-diagram" role="img" aria-label="独自俯瞰図。横2マスのクラフト台に、後方の横向き収納ボックス2個と、左右の縦向き収納ボックス2個がそれぞれ1マスずつ接触する">
+          <div class="spec-room-head"><strong>上から見た模式図</strong><span>公式画面・実際の配置ではありません</span></div>
+          <div class="spec-room-grid">
+            <div class="spec-linked-layout" aria-hidden="true"><span class="linked-box linked-rear-left">収納1<small>後方・2マス</small></span><span class="linked-box linked-rear-right">収納2<small>後方・2マス</small></span><span class="linked-box linked-side-left">収納3<small>左・2マス</small></span><span class="linked-craft">クラフト台<small>2マス</small></span><span class="linked-box linked-side-right">収納4<small>右・2マス</small></span></div>
+            <div class="spec-count-formula"><span>手持ちの数</span><b>＋</b><span>隣接4箱の数</span><b>＝</b><strong>クラフト画面に表示される個数</strong></div>
+            <span class="spec-room-path">必要数を超える分を移す <b aria-hidden="true">→</b></span>
+            <span class="spec-room-object far-box"><i aria-hidden="true">📦</i><b>非隣接の収納ボックス</b><em>手持ち数の調整分・余り</em></span>
+          </div>
+        </div>
+      </section>
+      <section id="spec-dye-conversion">
+        <h3>えのぐ変換は10個区切りで行う</h3>
+        <p>えのぐを使ったブロックの色付けは、えのぐ2個でブロック10個ができる比率です。ただし消費するえのぐの数は「1回の交換ごと」に切り上げで計算されるため、交換を10個区切りで行わないと余分にえのぐを消費してしまいます。</p>
+        <div class="spec-compare-table" role="table" aria-label="100個のブロックを色付けする交換方法の比較"><div role="row"><strong role="columnheader">交換方法</strong><strong role="columnheader">使うえのぐ</strong><strong role="columnheader">結果</strong></div><div role="row"><span role="cell">99個＋1個</span><span role="cell">20＋2＝22個</span><b role="cell" class="spec-bad">2個多い</b></div><div role="row"><span role="cell">90個＋10個</span><span role="cell">18＋2＝20個</span><b role="cell" class="spec-good">最小</b></div></div>
+        <p>ツールに表示される必要えのぐ数は、10個区切りできれいに交換した場合の最小値です。</p>
+      </section>
+      <section id="spec-exact-count">
+        <h3>ブロック数をきっちり合わせる理由</h3>
+        <p>ブロックはツールが計算した必要数ぴったりに分けておくのがおすすめです。数を多めに持ったままだと、設置ミスがあっても気づきにくくなります。</p>
+        <div class="spec-flow" aria-label="置き間違いを修正する流れ"><span>不足を発見</span><b>→</b><span>一旦飛ばす</span><b>→</b><span>最後の余りを確認</span><b>→</b><span>「作業後チェック」で照合</span><b>→</b><span>修正</span></div>
+        <p>作業の終盤でブロックが足りなくなったら、その場所は一旦飛ばして作業を続けます。最後に使い切れず余ったブロックが出た場合、そのブロックがどこかのマスへ間違って置かれている可能性があります。ゲーム内制作ガイドの末尾にある「作業後チェック」で余ったブロックを選び、本来の設置場所とゲーム画面を見比べて修正してください。</p>
+      </section>
+
+      <h2 id="spec-data-category">データとプライバシー</h2>
+      <section id="spec-privacy">
+        <h3>画像やデータはどこかに送信されるの?</h3>
+        <p>このツールはブラウザ内だけで動作します。アップロードした画像、変換したドット絵、作品データは、外部のアプリサーバーに送信・保存されることはありません。「マイ作品」はこの端末のブラウザ（IndexedDB）にのみ保存されます。QRコードの読み取りに使うカメラ映像も、このツールが録画・保存・アップロードすることはありません。</p>
+      </section>
+    </div>
   </div>
 </div>
 <div id="app-toast" class="app-toast" role="status" aria-live="polite"></div>
@@ -2792,6 +4278,7 @@ body.modal-open {
 <footer class="app-footer">
   <div>本ツールは非公式のファン制作物です。ゲームの運営元・開発元・権利者とは一切関係ありません。</div>
   <div>作品はブラウザ内に保存され、ブラウザデータの削除などにより失われる場合があります。必要な作品は書き出して保管してください。</div>
+  <div>画像や作品データは外部のアプリサーバーに送信されません。<button type="button" class="spec-link" onclick="openSpecSection('spec-privacy')">※詳しく見る</button></div>
   <div>独自コード: PolyForm Noncommercial 1.0.0 ／ qrcode.js・GIFデコーダ: MIT ／ jsQR: Apache-2.0</div>
 </footer>
 
@@ -16567,6 +18054,11 @@ function addRecipeInputs(target,inputs,batches){
 
 function sortCraftItemsByCount(items){return [...items].sort((a,b)=>b.count-a.count||String(a.item).localeCompare(String(b.item),'ja'));}
 
+function baseBlockLabel(material,catalog){
+  const unpainted=catalog.find(candidate=>candidate.matBase===material.matBase&&!candidate.dyeIdx);
+  return String(unpainted?.name||material.name||material.matBase).replace(/（[^）]*）$/,'');
+}
+
 function aggregateCraftMaterials(materialCounts,catalog=ALL_MATS,recipeOverrides=RECIPE_OVERRIDES){
   const byId=new Map(catalog.map(material=>[material.id,material]));
   const materialTotals=new Map(),unregistered=[];
@@ -16577,26 +18069,35 @@ function aggregateCraftMaterials(materialCounts,catalog=ALL_MATS,recipeOverrides
     }
     materialTotals.set(id,(materialTotals.get(id)||0)+count);
   }
-  const raw={},dyes={};
+  const raw={},dyes={},baseGroups=new Map(),baseBlocks=[];
   materialTotals.forEach((count,id)=>{
     const material=byId.get(id),override=recipeOverrides[id];
     if(override){
-      const batches=Math.ceil(count/(Number(override.yield)||10));
+      const yieldCount=Number(override.yield)||10,batches=Math.ceil(count/yieldCount),craftCount=batches*yieldCount;
       addRecipeInputs(raw,override.baseInputs||[],batches);
       addRecipeInputs(dyes,override.dyeInputs||[],batches);
+      baseBlocks.push({id,item:baseBlockLabel(material,catalog),required:count,craftCount,extra:craftCount-count,yield:yieldCount});
       return;
     }
     const baseRecipe=BASE_RECIPES[material.matBase],dyeKey=DYE_PATTERNS[material.dyeIdx],dyeRecipe=material.dyeIdx?DYE_RECIPES[dyeKey]:null;
     if(!baseRecipe||(material.dyeIdx&&!dyeRecipe)){
       unregistered.push({id,name:material.name,count});return;
     }
-    const batches=Math.ceil(count/(Number(baseRecipe.yield)||10));
-    addRecipeInputs(raw,baseRecipe.inputs||[],batches);
-    if(dyeRecipe)addRecipeInputs(dyes,dyeRecipe.inputs||[],batches);
+    const group=baseGroups.get(material.matBase)||{id:material.matBase,item:baseBlockLabel(material,catalog),required:0,recipe:baseRecipe};
+    group.required+=count;baseGroups.set(material.matBase,group);
+    if(dyeRecipe){
+      const dyeBatches=Math.ceil(count/(Number(dyeRecipe.yield)||10));
+      addRecipeInputs(dyes,dyeRecipe.inputs||[],dyeBatches);
+    }
+  });
+  baseGroups.forEach(group=>{
+    const yieldCount=Number(group.recipe.yield)||10,batches=Math.ceil(group.required/yieldCount),craftCount=batches*yieldCount;
+    addRecipeInputs(raw,group.recipe.inputs||[],batches);
+    baseBlocks.push({id:group.id,item:group.item,required:group.required,craftCount,extra:craftCount-group.required,yield:yieldCount});
   });
   if(unregistered.length)console.warn('クラフトレシピ未登録素材:',unregistered.map(item=>item.id));
   const list=value=>Object.entries(value).map(([item,count])=>({item,count}));
-  return {rawMaterials:list(raw),dyes:list(dyes),unregistered};
+  return {baseBlocks:baseBlocks.sort((a,b)=>b.required-a.required||String(a.item).localeCompare(String(b.item),'ja')),rawMaterials:list(raw),dyes:list(dyes),unregistered};
 }
 function workViewTextStyle(hex) {
   const match = String(hex || '').match(/^#?([0-9a-f]{6})$/i);
@@ -16852,13 +18353,12 @@ function sharedWorkMaterialMarkup(material, count, countLabel, escapeHtml, prepa
     `<span class="work-view-swatch" style="background:${material.hex};${workViewTextStyle(material.hex)}" title="素材番号 ${material.no}">${material.no}</span>`,
     '<span>',
     `<span class="work-view-material-name">${escapeHtml(material.name)}</span>`,
-    `<span class="work-view-material-sub">${escapeHtml(material.category)}</span>`,
     '</span>',
     `<strong class="work-view-material-count">${countLabel}${count}個</strong>`,
     '</button>',
     '<label class="work-view-material-check">',
-    `<input type="checkbox" data-material-prepared="${material.no}" ${prepared ? 'checked' : ''}>`,
-    `<span>${prepared ? '用意済み' : '用意済みにする'}</span>`,
+    `<input type="checkbox" data-material-prepared="${material.no}" aria-label="素材番号${material.no}を用意済みにする" ${prepared ? 'checked' : ''}>`,
+    '<span class="work-view-material-checkmark" aria-hidden="true">✓</span>',
     '</label>',
     '</div>',
   ].join('');
@@ -16933,11 +18433,14 @@ function renderSharedWorkCraft(container, materials, counts, escapeHtml) {
   const rows = list => sortCraftItemsByCount(list)
     .map(item => `<div class="work-view-craft-row"><span>${escapeHtml(item.item)}</span><strong>${item.count}個</strong></div>`)
     .join('') || '<div class="work-view-craft-empty">必要ありません</div>';
+  const baseRows = result.baseBlocks
+    .map(item => `<div class="work-view-prep-row"><span>${escapeHtml(item.item)}</span><span><small>必要</small><strong>${item.required}個</strong></span><span><small>作る</small><strong>${item.craftCount}個</strong></span><span><small>余り</small><strong>${item.extra}個</strong></span></div>`)
+    .join('') || '<div class="work-view-craft-empty">必要ありません</div>';
   const warning = result.unregistered.length
     ? `<div class="work-view-craft-warning">未登録: ${result.unregistered.map(item => escapeHtml(item.name)).join('、')}</div>`
     : '';
 
-  container.innerHTML = `<section class="work-view-craft-section"><h3>原材料</h3>${rows(result.rawMaterials)}</section><section class="work-view-craft-section"><h3>えのぐ</h3>${rows(result.dyes)}</section>${warning}`;
+  container.innerHTML = `<section class="work-view-craft-section"><h3>1. 色を塗る前のブロック</h3><div class="work-view-craft-help">色違いをまとめてから、ゲーム内の生成単位で切り上げています。「余り」は別の収納ボックスへ移してください。</div>${baseRows}</section><section class="work-view-craft-section"><h3>2. ブロック作成に必要な原材料</h3>${rows(result.rawMaterials)}</section><section class="work-view-craft-section"><h3>3. 色付けに必要なえのぐ</h3><div class="work-view-craft-help">10個区切りで交換した場合の最小値です。</div>${rows(result.dyes)}</section>${warning}`;
 }
 
 function bindSharedWorkActions(root, actions) {
@@ -16965,6 +18468,8 @@ const WORK_DB_NAME = 'pocapoke-my-works';
 const WORK_DB_VERSION = 1;
 const WORK_STORE_NAME = 'works';
 const WORK_EPOCH_SECONDS = Date.UTC(2026,0,1)/1000;
+const ACTIVE_WORK_STORAGE_KEY = 'pocapoke-active-work-id';
+const APP_VIEW_HASHES = Object.freeze({convert:'#convert',gallery:'#gallery',build:'#build'});
 
 const MIGRATIONS = Object.freeze({});
 let activeWorkMeta = null;
@@ -16983,6 +18488,22 @@ let integratedWorkRecord = null;
 let integratedWorkData = null;
 let integratedWorkState = null;
 let integratedWorkSaveTimer = null;
+let currentWorkId = readCurrentWorkId();
+let appContextRequest = 0;
+
+function readCurrentWorkId(){
+  try{return localStorage.getItem(ACTIVE_WORK_STORAGE_KEY)||null;}
+  catch(error){console.warn('選択中の作品を復元できませんでした。',error);return null;}
+}
+
+function setCurrentWorkId(id){
+  currentWorkId=id||null;
+  try{
+    if(currentWorkId)localStorage.setItem(ACTIVE_WORK_STORAGE_KEY,currentWorkId);
+    else localStorage.removeItem(ACTIVE_WORK_STORAGE_KEY);
+  }catch(error){console.warn('選択中の作品を保存できませんでした。',error);}
+  refreshAppContext();
+}
 
 function migrateToLatest(input){
   let data=structuredCloneSafe(input);
@@ -17049,6 +18570,41 @@ function updateWorkIdentity(){
   const el=document.getElementById('work-identity');
   if(!el)return;
   el.textContent=activeWorkMeta?`作品ID ${activeWorkMeta.workId} / v${activeWorkMeta.version}`:'作品はまだ発行されていません';
+  refreshAppContext();
+}
+
+async function refreshAppContext(){
+  const title=document.getElementById('app-context-title');
+  const status=document.getElementById('app-context-status');
+  if(!title||!status)return;
+  const request=++appContextRequest;
+  const view=document.body.dataset.appView||'convert';
+  if(view==='convert'&&activeWorkMeta){
+    title.textContent=activeWorkMeta.title||'無題のドット絵';
+    status.textContent=`画像を編集中 ・ ${activeWorkMeta.workId} / v${activeWorkMeta.version}`;
+    return;
+  }
+  if(!currentWorkId){
+    title.textContent='作品が選択されていません';
+    status.textContent=view==='build'?'マイ作品から選ぶと制作を始められます':'画像を変換するか、マイ作品から選んでください';
+    return;
+  }
+  try{
+    const record=integratedWorkRecord?.workId===currentWorkId?integratedWorkRecord:await getWork(currentWorkId);
+    if(request!==appContextRequest)return;
+    if(!record){setCurrentWorkId(null);return;}
+    title.textContent=record.title||'無題のドット絵';
+    if(view==='build'&&integratedWorkRecord?.workId===currentWorkId&&integratedWorkState){
+      const total=integratedTotalCount();
+      const done=integratedDoneCount();
+      status.textContent=`ゲーム内制作 ${done}/${total}マス（${total?Math.round(done/total*100):0}%）`;
+    }else{
+      status.textContent=`選択中 ・ ${record.workId} / v${record.currentVersion}`;
+    }
+  }catch(error){
+    if(request===appContextRequest)status.textContent='作品情報を読み込めませんでした';
+    console.warn(error);
+  }
 }
 
 function defaultWorkTitle(date=new Date()){
@@ -17150,13 +18706,16 @@ const getAllWorks=()=>dbRequest('readonly',store=>store.getAll());
 const getWork=id=>dbRequest('readonly',store=>store.get(id));
 const putWork=record=>dbRequest('readwrite',store=>store.put(record));
 const removeWork=id=>dbRequest('readwrite',store=>store.delete(id));
+const modalFocusOrigins=new WeakMap();
 
 function openModal(id){
   const element=document.getElementById(id);
   if(!element)return;
+  if(!element.classList.contains('open')&&document.activeElement instanceof HTMLElement)modalFocusOrigins.set(element,document.activeElement);
   element.classList.add('open');
   element.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
+  requestAnimationFrame(()=>element.querySelector('.modal-close,button,[href],input,select,textarea')?.focus({preventScroll:true}));
 }
 function closeModal(id){
   const element=document.getElementById(id);
@@ -17164,6 +18723,33 @@ function closeModal(id){
   element.classList.remove('open');
   element.setAttribute('aria-hidden','true');
   if(!document.querySelector('.modal.open'))document.body.classList.remove('modal-open');
+  const origin=modalFocusOrigins.get(element);
+  modalFocusOrigins.delete(element);
+  if(origin&&document.contains(origin))requestAnimationFrame(()=>origin.focus({preventScroll:true}));
+}
+function openSpecModal(){
+  const modal=document.getElementById('spec-modal');
+  const card=modal?.querySelector('.modal-card');
+  if(card)card.scrollTop=0;
+  openModal('spec-modal');
+}
+function openSpecSection(anchorId){
+  openModal('spec-modal');
+  requestAnimationFrame(()=>document.getElementById(anchorId)?.scrollIntoView({block:'start'}));
+}
+
+async function openHelpMenu(){
+  const action=await askChoice({
+    title:'ヘルプ',
+    message:'見たい内容を選んでください。',
+    choices:[
+      {label:'閉じる',value:'close'},
+      {label:'このツールの仕様',value:'spec'},
+      {label:'はじめての使い方',value:'guide',primary:true},
+    ],
+  });
+  if(action==='guide')openOnboarding(true);
+  if(action==='spec')openSpecModal();
 }
 
 function askChoice({title='確認',message,choices}){
@@ -17203,7 +18789,7 @@ function buildIntegratedWorkData(record){
 
 function defaultIntegratedWorkState(data){
   const autoZoom=Math.max(28,Math.min(58,Math.floor((window.innerWidth-64)/Math.min(data.width,10))));
-  return {doneCells:{},doneRows:{},preparedMaterials:{},currentRow:data.height-1,currentByAxis:{row:data.height-1,column:0},bottom:true,rowMode:true,axis:'row',workViewLayoutMode:'horizontal',highlight:0,zoom:autoZoom,materialSort:'number',quantityMode:'total'};
+  return {doneCells:{},doneRows:{},preparedMaterials:{},currentRow:0,currentByAxis:{row:data.height-1,column:0},bottom:true,rowMode:true,axis:'column',workViewLayoutMode:'horizontal',highlight:0,zoom:autoZoom,materialSort:'number',quantityMode:'total'};
 }
 
 function materialColorId(material){
@@ -17249,15 +18835,10 @@ function reconcileProgressForWorkChange(record,newWorkData){
   const previous=record.progress;
   const next=defaultIntegratedWorkState(nextData);
   Object.assign(next,previous,{doneCells:{},doneRows:{},preparedMaterials:{}});
-  if(oldData.width===nextData.width&&oldData.height===nextData.height){
-    oldData.grid.forEach((row,rowIndex)=>row.forEach((oldNo,column)=>{
-      const oldId=oldData.materials.find(material=>material.no===oldNo)?.id||null;
-      const newNo=nextData.grid[rowIndex][column];
-      const newId=nextData.materials.find(material=>material.no===newNo)?.id||null;
-      const key=integratedCellKey(rowIndex,column);
-      if(oldId===newId&&previous.doneCells?.[key])next.doneCells[key]=1;
-    }));
-  }
+  Object.keys(previous.doneCells||{}).forEach(key=>{
+    const [row,column]=key.split('_').map(Number);
+    if(row>=0&&column>=0&&row<nextData.height&&column<nextData.width&&nextData.grid[row][column])next.doneCells[key]=1;
+  });
   const preparedIds=new Set(oldData.materials.filter(material=>previous.preparedMaterials?.[material.no]).map(material=>material.id));
   nextData.materials.forEach(material=>{if(preparedIds.has(material.id))next.preparedMaterials[material.no]=1;});
   next.doneRows=recomputeDoneRows(nextData,next.doneCells);
@@ -17269,7 +18850,7 @@ async function openIntegratedWorkView(id){
     const record=await getWork(id);if(!record)throw new Error('作品が見つかりません。');
     integratedWorkRecord=record;integratedWorkData=buildIntegratedWorkData(record);integratedWorkState=Object.assign(defaultIntegratedWorkState(integratedWorkData),structuredCloneSafe(record.progress||{}));
     integratedWorkState.doneCells=integratedWorkState.doneCells||{};integratedWorkState.doneRows=integratedWorkState.doneRows||{};integratedWorkState.preparedMaterials=integratedWorkState.preparedMaterials||{};integratedWorkState.highlight=0;integratedWorkState.showRowPrepared=false;
-    if(!['row','column'].includes(integratedWorkState.axis))integratedWorkState.axis='row';if(!['horizontal','vertical'].includes(integratedWorkState.workViewLayoutMode))integratedWorkState.workViewLayoutMode='horizontal';
+    if(!['row','column'].includes(integratedWorkState.axis))integratedWorkState.axis='column';if(!['horizontal','vertical'].includes(integratedWorkState.workViewLayoutMode))integratedWorkState.workViewLayoutMode='horizontal';
     const savedPositions=record.progress?.currentByAxis;
     integratedWorkState.currentByAxis={row:integratedWorkData.height-1,column:0,...(savedPositions||{})};
     if(!savedPositions)integratedWorkState.currentByAxis[integratedWorkState.axis]=integratedWorkState.currentRow;
@@ -17279,13 +18860,25 @@ async function openIntegratedWorkView(id){
     if(!['number','count'].includes(integratedWorkState.materialSort))integratedWorkState.materialSort='number';if(!['total','remaining'].includes(integratedWorkState.quantityMode))integratedWorkState.quantityMode='total';
     document.getElementById('work-view-title').textContent=record.title||'無題のドット絵';
     document.getElementById('work-view-meta').textContent=`${record.workId} / v${record.currentVersion} ・ ${integratedWorkData.width}x${integratedWorkData.height}`;
-    drawIntegratedWorkMini();closeModal('works-modal');openModal('integrated-work-modal');bindIntegratedWorkActions();renderIntegratedWorkView(false);
-  }catch(error){reportUiError('作業ビューを開けませんでした。',error);}
+    setCurrentWorkId(record.workId);
+    document.getElementById('integrated-work-modal')?.classList.add('has-work');
+    drawIntegratedWorkMini();bindIntegratedWorkActions();renderIntegratedWorkView(false);
+    await navigateAppView('build',{skipBuildLoad:true});
+  }catch(error){
+    document.getElementById('integrated-work-modal')?.classList.remove('has-work');
+    reportUiError('ゲーム内制作ガイドを開けませんでした。',error);
+  }
 }
 
 function closeIntegratedWorkView(){
+  releaseIntegratedWorkView();
+  navigateAppView('gallery');
+}
+
+function releaseIntegratedWorkView(){
   if(integratedWorkSaveTimer){clearTimeout(integratedWorkSaveTimer);integratedWorkSaveTimer=null;saveIntegratedWorkProgress();}
-  closeModal('integrated-work-modal');integratedWorkRecord=null;integratedWorkData=null;integratedWorkState=null;
+  integratedWorkRecord=null;integratedWorkData=null;integratedWorkState=null;
+  document.getElementById('integrated-work-modal')?.classList.remove('has-work');
 }
 
 function drawIntegratedWorkMini(){
@@ -17427,16 +19020,58 @@ function renderIntegratedWorkView(persist=true){
   document.getElementById('work-view-quantity-remaining').classList.toggle('on',remaining);
   document.getElementById('work-view-material-mode').textContent=modeLabel+'を表示中';
   document.getElementById('work-view-craft-mode').textContent=modeLabel+'をもとに計算'+preparedNote;
-  document.getElementById('work-view-groups-mode').textContent='現在選択中の必要数モードで集計'+preparedNote;
   const setPrepared=(no,prepared)=>{if(prepared)state.preparedMaterials[no]=1;else delete state.preparedMaterials[no];renderIntegratedWorkView();};
   renderSharedWorkMaterials(document.getElementById('work-view-materials'),data.materials,state,escapeHtml,selectMaterial,{counts:displayCounts,sort:state.materialSort,countLabel:remaining?'残り ':'総数 ',onPrepared:setPrepared});
   const rowCounts=columnAxis?workViewColumnCounts(data.grid,state.currentRow):workViewRowCounts(data.grid,state.currentRow);
   document.getElementById('work-view-row-material-title').textContent=columnAxis?'この列の素材':'この段の素材';
   const totalRemainingCounts=workViewGridCounts(data,state,true);
   renderSharedWorkMaterials(document.getElementById('work-view-row-materials'),data.materials,state,escapeHtml,selectMaterial,{counts:rowCounts,remainingCounts:totalRemainingCounts,row:true,showPrepared:state.showRowPrepared,onPrepared:setPrepared});
-  renderSharedWorkGroups(document.getElementById('work-view-groups'),workViewGroupsForCounts(data.materials,preparedFilteredCounts),escapeHtml);
   renderSharedWorkCraft(document.getElementById('work-view-craft'),data.materials,preparedFilteredCounts,escapeHtml);
+  renderIntegratedWorkErrorCheck(document.getElementById('work-view-error-check'),data,state,selectMaterial);
   if(persist)scheduleIntegratedWorkSave();
+  refreshAppContext();
+}
+
+function renderIntegratedWorkErrorCheck(container,data,state,selectMaterial){
+  if(!container)return;
+  const selected=data.materials.find(material=>material.no===state.highlight);
+  const buttons=data.materials.map(material=>`<button type="button" class="work-view-error-material${material.no===state.highlight?' on':''}" data-error-material="${material.no}" aria-pressed="${material.no===state.highlight}"><span style="background:${material.hex}">${material.no}</span><b>${escapeHtml(material.name)}</b></button>`).join('');
+  container.innerHTML=`<p class="work-view-error-lead">ブロックが余ったら、そのブロックを選んでください。拡大中の作業グリッドとは別に、全体が一画面へ収まる図で予定位置を光らせます。</p><div class="work-view-error-overview"><div><strong>全体図</strong><span>${data.width}×${data.height}</span></div><canvas id="work-view-error-overview" aria-label="作品全体の置き間違い確認図"></canvas></div><ol class="work-view-error-steps"><li>余ったブロックを選ぶ</li><li>全体図で光ったマスをゲーム画面と見比べる</li><li>違うブロックが置かれた場所を直す</li></ol><div class="work-view-error-materials">${buttons}</div><div class="work-view-error-status">${selected?`<span style="background:${selected.hex}">${selected.no}</span><strong>${escapeHtml(selected.name)}</strong> の予定位置を全体図で表示中<button type="button" data-error-clear>表示を戻す</button>`:'余ったブロックを選ぶと、そのブロックを置く予定だった場所を全体図で確認できます。'}</div>`;
+  drawIntegratedWorkErrorOverview(container.querySelector('#work-view-error-overview'),data,state.highlight);
+  container.querySelectorAll('[data-error-material]').forEach(button=>button.addEventListener('click',()=>selectMaterial(Number(button.dataset.errorMaterial))));
+  container.querySelector('[data-error-clear]')?.addEventListener('click',()=>selectMaterial(state.highlight));
+}
+
+function drawIntegratedWorkErrorOverview(canvas,data,highlight){
+  if(!canvas)return;
+  const cell=Math.max(4,Math.min(12,Math.floor(720/Math.max(data.width,data.height))));
+  canvas.width=data.width*cell;
+  canvas.height=data.height*cell;
+  const context=canvas.getContext('2d');
+  const byNo=Object.fromEntries(data.materials.map(material=>[material.no,material]));
+  context.clearRect(0,0,canvas.width,canvas.height);
+  data.grid.forEach((row,rowIndex)=>row.forEach((no,column)=>{
+    const material=byNo[no];
+    if(!material)return;
+    context.fillStyle=material.hex;
+    context.fillRect(column*cell,rowIndex*cell,cell,cell);
+  }));
+  if(highlight){
+    context.fillStyle='rgba(27,25,23,.78)';
+    context.fillRect(0,0,canvas.width,canvas.height);
+    data.grid.forEach((row,rowIndex)=>row.forEach((no,column)=>{
+      if(no===highlight){
+        const material=byNo[no];
+        context.fillStyle=material.hex;
+        context.fillRect(column*cell,rowIndex*cell,cell,cell);
+      context.fillStyle='rgba(255,244,79,.38)';
+      context.fillRect(column*cell,rowIndex*cell,cell,cell);
+      context.strokeStyle='#fff45b';
+      context.lineWidth=Math.max(1,Math.floor(cell/4));
+      context.strokeRect(column*cell+context.lineWidth/2,rowIndex*cell+context.lineWidth/2,cell-context.lineWidth,cell-context.lineWidth);
+      }
+    }));
+  }
 }
 
 function clearIntegratedWorkHighlight(){
@@ -17503,7 +19138,7 @@ function toggleIntegratedWorkHeader(){
   const compact=card.classList.toggle('head-collapsed');
   button.textContent=compact?'▼':'▲';
   button.setAttribute('aria-expanded',String(!compact));
-  button.setAttribute('aria-label',compact?'作業ビューヘッダーを開く':'作業ビューヘッダーをたたむ');
+  button.setAttribute('aria-label',compact?'ゲーム内制作ガイドのヘッダーを開く':'ゲーム内制作ガイドのヘッダーをたたむ');
 }
 function toggleIntegratedWorkRowDone(){
   const state=integratedWorkState;
@@ -17542,9 +19177,44 @@ async function resetIntegratedWorkProgress(){
   renderIntegratedWorkView();
 }
 
+function appViewFromHash(){
+  const hash=location.hash.toLowerCase();
+  return Object.keys(APP_VIEW_HASHES).find(view=>APP_VIEW_HASHES[view]===hash)||'convert';
+}
+
+async function navigateAppView(view,options={}){
+  if(!APP_VIEW_HASHES[view])view='convert';
+  const previous=document.body.dataset.appView||'convert';
+  if(previous==='build'&&view!=='build'&&integratedWorkRecord)releaseIntegratedWorkView();
+  document.body.dataset.appView=view;
+  document.querySelectorAll('[data-app-view-target]').forEach(button=>{
+    if(button.dataset.appViewTarget===view)button.setAttribute('aria-current','page');
+    else button.removeAttribute('aria-current');
+  });
+  document.getElementById('app-view-convert')?.setAttribute('aria-hidden',String(view!=='convert'));
+  document.getElementById('works-modal')?.setAttribute('aria-hidden',String(view!=='gallery'));
+  document.getElementById('integrated-work-modal')?.setAttribute('aria-hidden',String(view!=='build'));
+  if(!options.fromHistory&&location.hash!==APP_VIEW_HASHES[view]){
+    const method=options.replace?'replaceState':'pushState';
+    history[method](null,'',APP_VIEW_HASHES[view]);
+  }
+  if(view==='gallery')await renderWorksGallery();
+  if(view==='build'&&!integratedWorkRecord&&currentWorkId&&!options.skipBuildLoad){
+    await openIntegratedWorkView(currentWorkId);
+    return;
+  }
+  refreshAppContext();
+}
+
 async function openWorksGallery(){
-  openModal('works-modal');
-  await renderWorksGallery();
+  await navigateAppView('gallery');
+}
+
+async function initAppNavigation(){
+  document.body.classList.add('app-navigation-ready');
+  const knownHash=Object.values(APP_VIEW_HASHES).includes(location.hash.toLowerCase());
+  await navigateAppView(appViewFromHash(),{replace:true,fromHistory:knownHash});
+  window.addEventListener('popstate',()=>navigateAppView(appViewFromHash(),{fromHistory:true}));
 }
 
 async function renderWorksGallery(){
@@ -17562,11 +19232,9 @@ async function renderWorksGallery(){
       <div class="work-meta">${escapeHtml(w.workId)} / v${w.currentVersion} ・ ${w.workData.width}x${w.workData.height}</div>
       <div class="tag-list">${(w.tags||[]).map(t=>`<span>${escapeHtml(t)}</span>`).join('')}</div>
       <div class="work-actions">
-        <button class="primary" onclick="openIntegratedWorkView('${w.workId}')">作業ビュー</button>
-        <button onclick="openSavedWork('${w.workId}')">編集で開く</button>
-        <button onclick="duplicateSavedWork('${w.workId}')">複製</button>
-        <button onclick="shareSavedWork('${w.workId}')">共有</button>
-        <button class="danger" onclick="deleteSavedWork('${w.workId}')">削除</button>
+        <button class="primary" onclick="openIntegratedWorkView('${w.workId}')">ゲーム内制作を続ける</button>
+        <button onclick="openSavedWork('${w.workId}')">編集する</button>
+        <details class="work-more"><summary aria-label="その他の操作">⋮</summary><div><button onclick="duplicateSavedWork('${w.workId}')">複製</button><button onclick="shareSavedWork('${w.workId}')">共有</button><button class="danger" onclick="deleteSavedWork('${w.workId}')">削除</button></div></details>
       </div>
     </div>
   </article>`).join('');
@@ -17597,11 +19265,11 @@ async function confirmSaveCurrentWork(){
     if(existing&&activeWorkMeta.version<=existing.currentVersion){
       const saveMode=await askChoice({
         title:'保存方法を選択',
-        message:`「${existing.title||'無題のドット絵'}」を更新しますか？\n新規保存を選ぶと、元の作品を残したまま別作品として保存します。`,
+        message:`「${existing.title||'無題のドット絵'}」を更新しますか？\n\n新しい作品として保存すると、元の作品と制作進捗を残し、新しい作品は進捗0から始まります。\nこの作品を更新すると、現在の制作進捗と「用意済み」を維持します。変更した箇所は必要に応じて確認してください。`,
         choices:[
           {label:'キャンセル',value:'cancel'},
-          {label:'新規で保存',value:'new'},
-          {label:`上書き保存（v${existing.currentVersion+1}）`,value:'overwrite',primary:true},
+          {label:'新しい作品として保存',value:'new'},
+          {label:`この作品を更新（v${existing.currentVersion+1}・制作進捗を維持）`,value:'overwrite',primary:true},
         ],
       });
       if(saveMode==='cancel')return;
@@ -17619,11 +19287,21 @@ async function confirmSaveCurrentWork(){
     const progress=existing?reconcileProgressForWorkChange(existing,workData):null;
     const record={workId:workData.workId,currentVersion:workData.version,title,tags,thumbnail:thumbnailFromPixels(),workData,progress,createdAt:existing?.createdAt||workData.createdAt,updatedAt:workData.updatedAt};
     await putWork(record);
+    const savedWorkId=record.workId;
+    setCurrentWorkId(savedWorkId);
     pendingOverwriteRecord=null;
     closeModal('work-edit-modal');
     updateWorkIdentity();
-    showMsg('✅ マイ作品に保存しました');
     if(document.getElementById('works-modal').classList.contains('open'))await renderWorksGallery();
+    const nextAction=await askChoice({
+      title:'マイ作品に保存しました',
+      message:`「${title||'無題のドット絵'}」を保存しました。次に何をしますか？`,
+      choices:[
+        {label:'編集を続ける',value:'edit'},
+        {label:'ゲーム内で作り始める',value:'build',primary:true},
+      ],
+    });
+    if(nextAction==='build')await openIntegratedWorkView(savedWorkId);
   }catch(error){reportUiError('作品を保存できませんでした。',error);}
 }
 
@@ -17633,8 +19311,9 @@ async function openSavedWork(id){
     if(!record)throw new Error('作品が見つかりません。');
     loadWorkData(record.workData,record);
     pendingOverwriteRecord=record;
-    closeModal('works-modal');
-    showMsg('✅ 作品を開きました。保存時に新規保存か上書き保存を選べます');
+    setCurrentWorkId(record.workId);
+    await navigateAppView('convert');
+    showMsg('✅ 作品を開きました。保存時に新しい作品として保存するか、この作品を更新するか選べます');
   }catch(error){
     reportUiError('作品を開けませんでした。',error);
   }
@@ -17674,6 +19353,10 @@ async function deleteSavedWork(id){
   if(!ok)return;
   try{
     await removeWork(id);
+    if(currentWorkId===id){
+      if(integratedWorkRecord?.workId===id)releaseIntegratedWorkView();
+      setCurrentWorkId(null);
+    }
     await renderWorksGallery();
   }catch(error){
     reportUiError('作品を削除できませんでした。',error);
@@ -17702,7 +19385,6 @@ async function shareSavedWork(id){
     sharingRecord=record;
     document.getElementById('share-work-label').textContent=`${record.title||'無題のドット絵'} / ${record.workId} / v${record.currentVersion}`;
     document.getElementById('qr-share').innerHTML='';
-    closeModal('works-modal');
     openModal('share-modal');
   }catch(error){
     reportUiError('共有画面を開けませんでした。',error);
@@ -17751,7 +19433,7 @@ async function importWorkData(data){
   }
   const now=new Date().toISOString();
   const record={workId:finalData.workId,currentVersion:finalData.version,title:finalData.title||'',tags:[],thumbnail:thumbnailFromWorkData(finalData),workData:finalData,progress:null,createdAt:finalData.createdAt||now,updatedAt:now};
-  await putWork(record);await renderWorksGallery();showToast('✅ マイ作品に取り込みました。');return true;
+  await putWork(record);setCurrentWorkId(record.workId);await renderWorksGallery();showToast('✅ マイ作品に取り込みました。');return true;
 }
 
 function thumbnailFromWorkData(data,size=240){
@@ -18361,7 +20043,10 @@ function stopQrScanner(){
   if(video)video.srcObject=null;
 }
 
-document.addEventListener('DOMContentLoaded',updateWorkIdentity);
+document.addEventListener('DOMContentLoaded',()=>{
+  updateWorkIdentity();
+  initAppNavigation();
+});
 
 const DEFAULT_PALETTE_MODE='standard';
 let paletteMode=DEFAULT_PALETTE_MODE;
@@ -18743,7 +20428,7 @@ function updateColorLimitPreviews(){
 // ===== グリッド =====
 let GW=50,GH=50,pixels=[],tool='pen',painting=false;
 let sourceFileName='',sourceBaseName='無題のドット絵';
-let curMat = ALL_MATS[0];
+let curMat = null;
 let srcW=1,srcH=1;
 let sourceLoaded=false;
 // Undo
@@ -18988,6 +20673,7 @@ function gc(e){
 }
 function paint(r,col){
   if(r<0||r>=GH||col<0||col>=GW)return;
+  if(tool!=='erase'&&!curMat)return;
   if(painting&&!painting._didPush){pushUndo();painting._didPush=true;}
   pixels[r][col]=tool==='erase'?null:curMat;redraw();
 }
@@ -18999,6 +20685,11 @@ function flood(r,col,t){
   flood(r+1,col,t);flood(r-1,col,t);flood(r,col+1,t);flood(r,col-1,t);
 }
 function applyPointerCell(r,c2){
+  if((tool==='pen'||tool==='fill')&&!curMat){
+    showMsg('先に素材パレットから使う素材を選んでください');
+    painting=false;
+    return;
+  }
   if(tool==='fill'){pushUndo();flood(r,c2,pixels[r][c2]);redraw();}
   else if(tool==='pick'){
     const p=pixels[r][c2];
@@ -19029,6 +20720,14 @@ function setMat(m){
   document.getElementById('cur-dot').style.background=m.hex;
   document.getElementById('cur-name').textContent=m.name + (autoEnabledIds.has(m.id)?'':'（手動専用）');
   document.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s.dataset.mid===m.id));
+}
+function clearMaterialSelection(){
+  curMat=null;
+  const dot=document.getElementById('cur-dot');
+  if(dot){dot.style.background='transparent';dot.textContent='－';}
+  const name=document.getElementById('cur-name');
+  if(name)name.textContent='素材を選んでください';
+  document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
 }
 function matHsl(m){const[r,g,b]=hexToRgb(m.hex);return rgbToHsl(r,g,b);}
 // ===== 素材グループ選択 + スウォッチ（アコーディオン統合）=====
@@ -19379,7 +21078,7 @@ function doInitialConvert(options={}){
     document.getElementById('snapshot-wrap').style.display='';setSnapshotDefault();
     renderSnapList();
     markConvertedWork();
-    markMaterialListUpdated('素材リストを更新しました');
+    markMaterialListUpdated('素材計算を更新しました');
     return;
   }
   const total=getGroupFiltered().length;
@@ -19862,7 +21561,7 @@ function renderCraftMaterials(entries){
   const wrap=document.getElementById('craft-content');
   if(!wrap)return;
   if(!entries.length){
-    wrap.innerHTML='<div class="empty">🧱<br>画像を変換すると<br>必要な原材料とえのぐが表示されます</div>';
+    wrap.innerHTML='<div class="empty">🧱<br>画像を変換すると<br>制作前に用意するものが表示されます</div>';
     return;
   }
   const result=aggregateCraftMaterials(entries);
@@ -19880,13 +21579,18 @@ function renderCraftMaterials(entries){
     : '';
   wrap.innerHTML=[
     '<section class="craft-section">',
-    '<h3>原材料</h3>',
-    '<div class="craft-note">各ブロックは素材が必要です。その必要素材リストです。</div>',
+    '<h3>色を塗る前のブロック</h3>',
+    '<div class="craft-note">色違いをまとめた必要数と、ゲーム内で実際に作る数です。</div>',
+    result.baseBlocks.map(item=>`<div class="craft-prep-row"><div class="minfo"><div class="mname">${escapeHtml(item.item)}</div><div class="craft-note">必要 ${item.required}個 ／ 余り ${item.extra}個</div></div><div class="mcnt">作る ${item.craftCount}個</div></div>`).join('')||'<div class="empty">必要ありません</div>',
+    '</section>',
+    '<section class="craft-section">',
+    '<h3>ブロック作成に必要な原材料</h3>',
+    '<div class="craft-note">上の「実際に作る数」を作成するための原材料です。</div>',
     rows(result.rawMaterials),
     '</section>',
     '<section class="craft-section">',
-    '<h3>えのぐ</h3>',
-    '<div class="craft-note">各素材はえのぐを使うことで色を付けることができます。その必要素材リストです。</div>',
+    '<h3>色付けに必要なえのぐ</h3>',
+    '<div class="craft-note">10個区切りで交換した場合の最小値です。</div>',
     rows(result.dyes),
     '</section>',
     unregistered,
@@ -19895,7 +21599,9 @@ function renderCraftMaterials(entries){
 
 // ===== ハイライト =====
 function buildHLList(){
-  const wrap=document.getElementById('hl-list');wrap.innerHTML='';
+  const wrap=document.getElementById('hl-list');
+  if(!wrap)return;
+  wrap.innerHTML='';
 
   // 使用色を集計（素材id単位）
   const usedMat={}, usedBase={};
@@ -19959,9 +21665,9 @@ function toggleControlDrawer(force){
   if(open){toggleControlDrawer(false);document.getElementById('material-nav-button')?.classList.remove('updated');}
   d.classList.toggle('open',open);
 }function showTab(t){
-  ['mat','craft','hl'].forEach(id=>{document.getElementById('tab-'+id).classList.toggle('on',id===t);document.getElementById('view-'+id).style.display=id===t?'':'none';});
-  if(t==='hl'){hlc.width=pc.width;hlc.height=pc.height;hlCtx.drawImage(pc,0,0);if(hlTarget)renderHL();}
+  ['mat','craft'].forEach(id=>{document.getElementById('tab-'+id).classList.toggle('on',id===t);document.getElementById('view-'+id).style.display=id===t?'':'none';});
 }
+document.getElementById('edit-color-adjust-button')?.addEventListener('click',()=>toggleControlDrawer());
 
 const controlSheet=document.getElementById('preview-ctrl');
 const controlSheetDragArea=document.getElementById('control-sheet-drag-area');
@@ -20042,8 +21748,7 @@ function copyList(){
   navigator.clipboard.writeText(txt).then(()=>showToast('✅ 素材リストをコピーしました')).catch(error=>{console.error(error);showToast('⚠️ 素材リストをコピーできませんでした');});
 }
 function markMaterialListUpdated(message){
-  document.getElementById('material-nav-button')?.classList.add('updated');
-  showToast('✅ '+message+'。「素材リスト」から確認できます');
+  showToast('✅ '+message+'。マイ作品へ保存すると「ゲームで作る」から確認できます');
 }
 function recalculateMaterialList(){calcMats();buildHLList();markMaterialListUpdated('編集結果で素材リストを更新しました');}
 
@@ -20071,7 +21776,7 @@ function closeOnboarding(action){
     }
   }
   closeModal('onboarding-modal');
-  document.querySelectorAll('.header-action').forEach(element=>element.classList.add('tab-guide'));
+  document.querySelectorAll('.edit-tool-button').forEach(element=>element.classList.add('tab-guide'));
   setTimeout(()=>{
     document.querySelectorAll('.tab-guide').forEach(element=>element.classList.remove('tab-guide'));
   },4000);
@@ -20086,7 +21791,7 @@ if(initialPaletteSlider){
 }
 updatePaletteModeUi();
 initPx();initCanvas();buildMatSel();buildSwatches();buildHLList();
-setMat(ALL_MATS[0]);
+clearMaterialSelection();
 setTimeout(initOnboarding,250);
 </script>
 </body>
